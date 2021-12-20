@@ -18,24 +18,44 @@ export default function ReservationsList({ reservations, setReservation_id }) {
   return filteredReservations.map((reservation, index) => {
     const reservation_id = reservation.reservation_id;
 
-    const handleCancel = () => {
-      const abortController = new AbortController();
-      const confirmWindow = window.confirm(
-        "Do you want to cancel this reservation? This cannot be undone."
-      );
-      if (confirmWindow) {
-        async function updatingReservation() {
-          try {
-            await updateReservation(reservation.reservation_id, "cancelled", abortController.signal) 
-            history.go();
-          } catch (error) {
-            setErrors(error)
+    // const handleCancel = (event) => {
+    //   event.preventDefault();
+    //   const abortController = new AbortController();
+    //   const confirmWindow = window.confirm(
+    //     "Do you want to cancel this reservation? This cannot be undone."
+    //   );
+    //   if (confirmWindow) {
+    //     async function updatingReservation() {
+    //       try {
+    //         await updateStatus(reservation.reservation_id, "cancelled", abortController.signal) 
+    //         history.go();
+    //       } catch (error) {
+    //         setErrors(error)
+    //       }
+    //     }
+    //     updatingReservation();
+    //     return () => abortController.abort();
+    //   } 
+    // }
+
+    const handleCancel = (event) => {
+      event.preventDefault();
+      if (window.confirm("Do you want to cancel this reservation? This cannot be undone.")) {
+          const abortController = new AbortController();
+          // PUT request
+          async function cancel() {
+              try {
+                  await updateStatus(reservation_id, "cancelled", abortController.signal);
+                  history.go(0);
+              } catch (error) {
+                  setErrors(error);
+              }
           }
+          if (setErrors.length === 0) {
+            cancel();
         }
-        updatingReservation();
-        return () => abortController.abort();
-      } 
-    }
+      }
+  }
 
     return (
       <div key={reservation.reservation_id}>

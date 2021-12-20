@@ -64,9 +64,11 @@ function hasValidPeople(req, res, next) {
 
 // validation middleware: checks that the reservation_date & reservation_time are not in the past
 function notInPast(req, res, next) {
-  const { reservation_date, reservation_time } = req.body.data;
+  const { reservation_date, reservation_time } = req.body.data; 
   const reservation = new Date(`${reservation_date} PDT`).setHours(reservation_time.substring(0, 2), reservation_time.substring(3));
   const now = Date.now();
+  console.log('reservation', reservation)
+  console.log('now', now)
   if (reservation > now) {
     return next();
   } else {
@@ -199,6 +201,7 @@ function statusIsNotFinished(req, res, next) {
 
 // list reservations by date
 function list(req, res) {
+  console.log('inside list')
   const { data } = res.locals;
   console.log("getting reservations...", data)
   res.json({ data: data });

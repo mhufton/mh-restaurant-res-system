@@ -20,10 +20,11 @@ export default function TableList({ tables }) {
         async function finishTableAndUpdateRes() {
           try {
             await finishTable(table.table_id)
-            await updateStatus({
-              status: "finished",
-              reservation_id: table.reservation_id
-            })
+            // await updateStatus({
+            //   status: "Free",
+            //   reservation_id: table.reservation_id
+            // })
+            console.log("table status", table)
             setErrors(null)
             history.go()
           } catch (errors) {

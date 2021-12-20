@@ -28,7 +28,7 @@ export default function Seat() {
         const reservationFetch = await readReservation(newParams, abortController.signal);
         const tablesFetch = await listTables(abortController.signal);
         const freeTables = tablesFetch.filter(table => {
-          return table.status === "Free";
+          return table.status.toLowerCase() === "free";
         });
         setReservation(reservationFetch);
         setTables(freeTables);
@@ -54,9 +54,9 @@ export default function Seat() {
   const handleChange = ({ target }) => {
     const selectedTable = tables.find(table => table.table_id === parseInt(target.value));
     if (selectedTable && selectedTable.capacity < reservation.people) {
-      setErrors("Party size cannot exceed table capacity.");
+      setErrors(["Party size cannot exceed table capacity."]);
     } else if (!selectedTable) {
-      setErrors("Please select a table.")
+      setErrors(["Please select a table."])
     } else {
       setErrors(null);
     }

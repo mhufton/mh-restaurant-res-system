@@ -24,6 +24,7 @@ export default function ReservationForm() {
     people: "",
   });
   const [errors, setErrors] = useState(null);
+  console.log("date", formData.reservation_date)
 
   React.useEffect(() => {
     const abortController = new AbortController();
@@ -44,52 +45,63 @@ export default function ReservationForm() {
     return () => abortController.abort();
   }, [reservation_id])
   
-  const handleChange = ({ target }) => {
+//   const handleChange = ({ target }) => {
 
-    let name = target.name;
-    let value = target.value;
+//     let name = target.name;
+//     let value = target.value;
                     
-    // check that reservation date is not on a Tuesday and / or not in the past
-    if (name === "reservation_date") {
-        const date = new Date(`${value} PDT`);
-        const reservation = date.getTime();
-        const now = Date.now();
+//     // check that reservation date is not on a Tuesday and / or not in the past
+//     if (name === "reservation_date") {
+//         const date = new Date(`${value} PDT`);
+//         console.log("date", date.geUTCDay)
+//         const reservation = date.getTime();
+//         console.log("reservation", typeof(reservation))
+//         const now = Date.now();
+//         console.log("now", typeof(now))
 
-        if (date.getUTCDay() === 2 && reservation < now) {
-          setErrors([
-                "The restaurant is closed on Tuesday.", 
-                "Reservation must be in the future."
-            ]);
-        } else if (date.getUTCDay() === 2) {
-          setErrors(["The restaurant is closed on Tuesday."]);
-        } else if (reservation < now) {
-          setErrors(["Reservation must be in the future."]);
-        } else {
-          setErrors([]);
-        }
-    }
+//         if (date.getUTCDay() === 2 && reservation < now) {
+//           setErrors([
+//                 "The restaurant is closed on Tuesday.", 
+//                 "Reservation must be in the future."
+//             ]);
+//         } else if (date.getUTCDay() === 2) {
+//           setErrors(["The restaurant is closed on Tuesday."]);
+//         } else if (reservation < now) {
+//           setErrors(["Reservation must be in the future."]);
+//         } else {
+//           setErrors([]);
+//         }
+//     }
 
-    // check that reservation time is during open hours
-    if (name === "reservation_time") {
-        const open = 1030;
-        const close = 2130;
-        const reservation = value.substring(0, 2) + value.substring(3);
-        if (reservation > open && reservation < close) {
-          setErrors([]);
-        } else {
-          setErrors(["Reservations are only allowed between 10:30am and 9:30pm."]);
-        }
-    }
-    // set the form state
+//     // check that reservation time is during open hours
+//     if (name === "reservation_time") {
+//         const open = 1030;
+//         const close = 2130;
+//         const reservation = value.substring(0, 2) + value.substring(3);
+//         if (reservation > open && reservation < close) {
+//           setErrors([]);
+//         } else {
+//           setErrors(["Reservations are only allowed between 10:30am and 9:30pm."]);
+//         }
+//     }
+//     // set the form state
+//     setFormData({
+//         ...formData,
+//         [target.name]: target.value,
+//     });
+// }
+
+  const handleChange = ({ target }) => {
     setFormData({
         ...formData,
         [target.name]: target.value,
     });
-}
+  }
  
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!reservation_id) {
+      console.log("adding a new res")
       const reservation = {
         ...formData,
         people: Number(formData.people),
@@ -101,31 +113,33 @@ export default function ReservationForm() {
         .catch((error) => setErrors(error))
     }
 
-    // if (reservation_id) {
-    //   console.log("params exist - updating existing res")
-    //   const reservation = {
-    //     ...formData,
-    //     people: Number(formData.people),
-    //   };
-    //   updateReservation(reservation)
-    //     .then(() => console.log("edited reservation"))
-    //     .catch((error) => setErrors(error))
-    //     .then(() =>
-    //     history.push(`/dashboard?date=${formData.reservation_date}`)
-    //     );
-    // } 
     if (reservation_id) {
-      async function putReservation() {
-        try {
-          setErrors(null);
-          await updateReservation(formData);
-          history.push(`/dashboard?date=${formData.reservation_date}`)
-        } catch (error) {
-          setErrors(error)
-        }
-      }
-      putReservation();
-    }
+      console.log("params exist - updating existing res")
+      const reservation = {
+        ...formData,
+        people: Number(formData.people),
+      };
+      updateReservation(reservation)
+        .then(() => console.log("edited reservation"))
+        .catch((error) => setErrors(error))
+        .then(() =>
+        history.push(`/dashboard?date=${formData.reservation_date}`)
+        );
+    } 
+    // if (reservation_id) {
+    //   console.log("editing an existing res")
+    //   async function putReservation() {
+    //     try {
+    //       setErrors(null);
+    //       await updateReservation(formData);
+    //       console.log("formData", formData)
+    //       history.push(`/dashboard?date=${formData.reservation_date}`)
+    //     } catch (error) {
+    //       setErrors(error)
+    //     }
+    //   }
+    //   putReservation();
+    // }
   };
 
   return (

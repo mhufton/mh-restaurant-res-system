@@ -20,7 +20,6 @@ import EditReservation from "./Reservations/EditReservation";
  */
 function Routes() {
   const [reservation_id, setReservation_id] = React.useState();
-  console.log("reservation_id in routes", reservation_id)
 
   return (
     <Switch>

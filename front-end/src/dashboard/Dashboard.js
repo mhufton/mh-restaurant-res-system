@@ -24,6 +24,8 @@ function Dashboard({ setReservation_id, date }) {
   const [reservations, setReservations] = useState([]);
   const [tables, setTables] = useState([]);
   const [dashboardError, setDashboardError] = useState([]);
+  console.log("reservation", reservations)
+  
 
   // formats the date variable to be human readable
   const dateObj = new Date(`${date} PDT`);
@@ -44,6 +46,7 @@ function Dashboard({ setReservation_id, date }) {
       }
     }
     loadDashboard();
+    console.log("res", reservations)
     return () => abortController.abort();
   }, [date]);
   // const date = today();

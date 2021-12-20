@@ -148,7 +148,7 @@ async function finish(req, res) {
     const { table } = res.locals;
     const updatedTableData = {
         ...table,
-        status: "free"
+        status: "Free"
     }
     const updatedTable = await service.finish(updatedTableData);
     // set reservation status to "finished" using reservation id
