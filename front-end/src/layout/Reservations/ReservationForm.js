@@ -24,6 +24,7 @@ export default function ReservationForm() {
     people: "",
   });
   const [errors, setErrors] = useState(null);
+  console.log("Reservation_id", reservation_id)
   console.log("date", formData.reservation_date)
 
   React.useEffect(() => {
@@ -32,10 +33,7 @@ export default function ReservationForm() {
       async function loadReservationToEdit() {
         try {
           const loadedRes = await readReservation(reservation_id, abortController.status);
-          setFormData({
-            ...loadedRes,
-            reservation_date: formatAsDate(loadedRes.reservation_date)
-          });
+          setFormData(loadedRes);
         } catch (error) {
           setErrors(error)
         }

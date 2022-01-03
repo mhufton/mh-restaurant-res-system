@@ -41,21 +41,19 @@ export default function ReservationsList({ reservations, setReservation_id }) {
     const handleCancel = (event) => {
       event.preventDefault();
       if (window.confirm("Do you want to cancel this reservation? This cannot be undone.")) {
-          const abortController = new AbortController();
-          // PUT request
-          async function cancel() {
-              try {
-                  await updateStatus(reservation_id, "cancelled", abortController.signal);
-                  history.go(0);
-              } catch (error) {
-                  setErrors(error);
-              }
-          }
-          if (setErrors.length === 0) {
-            cancel();
+        const abortController = new AbortController();
+        // PUT request
+        async function cancel() {
+            try {
+                await updateStatus(reservation_id, "cancelled", abortController.signal);
+                history.go(0);
+            } catch (error) {
+                setErrors(error);
+            }
         }
+        cancel();
       }
-  }
+    }
 
     return (
       <div key={reservation.reservation_id}>

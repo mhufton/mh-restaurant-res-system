@@ -2,7 +2,6 @@ const service = require("./reservations.service");
 const asyncErrorBoundary = require("../errors/asyncErrorBoundary");
 const hasProperties = require("../errors/hasProperties");
 const onlyValidProperties = require("../errors/onlyValidProperties");
-const { update } = require("../db/connection");
 
 const REQUIRED_PROPERTIES = [
   "first_name",
@@ -62,21 +61,20 @@ function hasValidPeople(req, res, next) {
   });
 }
 
-// validation middleware: checks that the reservation_date & reservation_time are not in the past
 function notInPast(req, res, next) {
-  const { reservation_date, reservation_time } = req.body.data; 
-  const reservation = new Date(`${reservation_date} PDT`).setHours(reservation_time.substring(0, 2), reservation_time.substring(3));
-  const now = Date.now();
-  console.log('reservation', reservation)
-  console.log('now', now)
-  if (reservation > now) {
+  const { reservation_date, reservation_time } = req.body.data;
+  const presentDate = Date.now();
+  const newReservationDate = new Date(
+    `${reservation_date} ${reservation_time}`
+  ).valueOf();
+  console.log("presentDate", presentDate, "newResDate", newReservationDate)
+  if (newReservationDate > presentDate) {
     return next();
-  } else {
-    return next({
-      status: 400,
-      message: "Reservation must be in the future.",
-    });
   }
+  next({
+    status: 400,
+    message: `New reservations must be in the future.`,
+  });
 }
 
 
@@ -98,17 +96,17 @@ function notTuesday(req, res, next) {
 
 // validation middleware: checks that the reservation_time is during operating hours
 function duringOperatingHours(req, res, next) {
-  const { reservation_time } = req.body.data;
-  const open = 1030;
-  const close = 2130;
-  const reservation = reservation_time.substring(0, 2) + reservation_time.substring(3);
-  if (reservation > open && reservation < close) {
-    return next();
-  } else {
-    return next({
+  const reservation_time = req.body.data.reservation_time;
+  const hours = Number(reservation_time.slice(0, 2));
+  const minutes = Number(reservation_time.slice(3, 5));
+  const clockTime = hours * 100 + minutes;
+  if (clockTime < 1030 || clockTime > 2130) {
+    next({
       status: 400,
-      message: "Reservations are only allowed between 10:30am and 9:30pm",
+      message: `Reservation time '${reservation_time}' must be between 10:30 AM and 9:30 PM`,
     });
+  } else {
+    next();
   }
 }
 
@@ -160,6 +158,7 @@ async function reservationExists(req, res, next) {
   const { reservationId } = req.params;
   const data = await service.read(reservationId);
   if (data) {
+    console.log("reservation exists")
     res.locals.reservation = data;
     return next();
   } else {
@@ -175,6 +174,7 @@ function statusIsValid(req, res, next) {
   const { status } = req.body.data;
   const validValues = ["booked", "seated", "finished", "cancelled"];
   if (validValues.includes(status)) {
+    console.log("status is valid")
     res.locals.status = status;
     return next();
   } else {
@@ -194,6 +194,7 @@ function statusIsNotFinished(req, res, next) {
       message: "A finished reservation cannot be updated.",
     });
   } else {
+    console.log("status is not 'finished'")
     return next();
   }
 }
@@ -201,7 +202,6 @@ function statusIsNotFinished(req, res, next) {
 
 // list reservations by date
 function list(req, res) {
-  console.log('inside list')
   const { data } = res.locals;
   console.log("getting reservations...", data)
   res.json({ data: data });
@@ -221,26 +221,30 @@ function read(req, res) {
 }
 
 // updates a reservation status
+// async function updateStatus(req, res) {
+//   const { reservation, status } = res.locals;
+//   console.log("reservation", reservation, "status", status)
+//   const updatedReservationData = {
+//     ...reservation,
+//     status: status,
+//   }
+//   console.log("updatedResData", updatedReservationData)
+//   const updatedReservation = await service.update(updatedReservationData);
+//   res.json({ data: updatedReservation });
+// }
 async function updateStatus(req, res) {
-  const { reservation, status } = res.locals;
-  const updatedReservationData = {
-    ...reservation,
-    status: status,
-  }
-  const updatedReservation = await service.update(updatedReservationData);
-  res.json({ data: updatedReservation });
+  const { status } = req.body.data;
+  const { reservationId } = req.params;
+  const data = await service.updateStatus(reservationId, status);
+  res.status(200).json({ data });
 }
 
 // updates reservation information
 async function updateReservation(req, res) {
-  const { reservation } = res.locals;
-  const { data } = req.body;
-  const updatedReservationData = {
-    ...reservation,
-    ...data,
-  }
-  const updatedReservation = await service.update(updatedReservationData);
-  res.json({ data: updatedReservation });
+  const updatedReservation = { ...req.body.data };
+  const { reservationId } = req.params;
+  const data = await service.update(reservationId, updatedReservation);
+  res.status(200).json({ data });
 }
 
 module.exports = {
