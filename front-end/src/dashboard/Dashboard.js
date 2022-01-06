@@ -24,7 +24,6 @@ function Dashboard({ setReservation_id, date }) {
   const [reservations, setReservations] = useState([]);
   const [tables, setTables] = useState([]);
   const [dashboardError, setDashboardError] = useState([]);
-  console.log("reservation", reservations)
   
 
   // formats the date variable to be human readable
@@ -46,42 +45,8 @@ function Dashboard({ setReservation_id, date }) {
       }
     }
     loadDashboard();
-    console.log("res", reservations)
     return () => abortController.abort();
   }, [date]);
-  // const date = today();
-  // const [reservations, setReservations] = useState([]);
-  // const [tables, setTables] = useState([]);
-  // const [error, setError] = useState(null);
-  // const [viewDate, setViewDate] = useState(date);
-  
-  // useEffect(() => {
-  //   const abortController = new AbortController();
-  
-  //   async function loadReservations() {
-  //     try {
-  //       if (viewDate === date) {
-  //         console.log(`date ${date}`)
-  //         const reservationDate = await listReservations({ date }, abortController.signal);
-  //         setReservations(reservationDate);
-  //         setError(null)
-  //       } else {
-  //         console.log(`viewDate ${viewDate}`)
-  //         const reservationDate = await listReservations({ viewDate }, abortController.signal);
-  //         setError(null);
-  //         setReservations(reservationDate)
-  //       }
-  //     } catch (error) {
-  //       setReservations([]);
-  //       setError(error);
-  //     }
-  //   }
-  //   loadReservations();
-  //   return () => abortController.abort();
-  // }, [date, viewDate]);
-  
-
-
   useEffect(() => {
     const abortController = new AbortController();
     async function loadTables() {
@@ -98,24 +63,6 @@ function Dashboard({ setReservation_id, date }) {
     return () => abortController.abort();
   }, [])
  
-  // const handlePrevious = (e) => {
-  //   e.preventDefault();
-  //   setViewDate(previous(viewDate));
-  //   console.log("viewDate", viewDate)
-  // }
-
-  // const handleToday = (e) => {
-  //   e.preventDefault();
-  //   setViewDate(date);
-  //   console.log("viewDate", viewDate)
-  // }
-
-  // const handleNext = (e) => {
-  //   e.preventDefault();
-  //   setViewDate(next(viewDate))
-  //   console.log("viewDate", viewDate)
-  // }
-  
   return (
     <main>
       <h1>Dashboard</h1>

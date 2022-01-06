@@ -67,7 +67,6 @@ function notInPast(req, res, next) {
   const newReservationDate = new Date(
     `${reservation_date} ${reservation_time}`
   ).valueOf();
-  console.log("presentDate", presentDate, "newResDate", newReservationDate)
   if (newReservationDate > presentDate) {
     return next();
   }
@@ -158,7 +157,6 @@ async function reservationExists(req, res, next) {
   const { reservationId } = req.params;
   const data = await service.read(reservationId);
   if (data) {
-    console.log("reservation exists")
     res.locals.reservation = data;
     return next();
   } else {
@@ -174,7 +172,6 @@ function statusIsValid(req, res, next) {
   const { status } = req.body.data;
   const validValues = ["booked", "seated", "finished", "cancelled"];
   if (validValues.includes(status)) {
-    console.log("status is valid")
     res.locals.status = status;
     return next();
   } else {
@@ -194,7 +191,6 @@ function statusIsNotFinished(req, res, next) {
       message: "A finished reservation cannot be updated.",
     });
   } else {
-    console.log("status is not 'finished'")
     return next();
   }
 }
@@ -203,14 +199,12 @@ function statusIsNotFinished(req, res, next) {
 // list reservations by date
 function list(req, res) {
   const { data } = res.locals;
-  console.log("getting reservations...", data)
   res.json({ data: data });
 }
 
 // creates a reservation
 async function create(req, res) {
   const reservation = await service.create(req.body.data);
-  console.log("reservation", reservation)
   res.status(201).json({ data: reservation });
 }
 
@@ -221,30 +215,42 @@ function read(req, res) {
 }
 
 // updates a reservation status
-// async function updateStatus(req, res) {
-//   const { reservation, status } = res.locals;
-//   console.log("reservation", reservation, "status", status)
-//   const updatedReservationData = {
-//     ...reservation,
-//     status: status,
-//   }
-//   console.log("updatedResData", updatedReservationData)
-//   const updatedReservation = await service.update(updatedReservationData);
-//   res.json({ data: updatedReservation });
-// }
 async function updateStatus(req, res) {
-  const { status } = req.body.data;
-  const { reservationId } = req.params;
-  const data = await service.updateStatus(reservationId, status);
-  res.status(200).json({ data });
+  const { reservation, status } = res.locals;
+  const updatedReservationData = {
+    ...reservation,
+    status: status,
+  }
+  const updatedReservation = await service.update(updatedReservationData);
+  res.json({ data: updatedReservation });
 }
+// async function updateStatus(req, res) {
+//   const { status } = req.body.data;
+//   const { reservationId } = req.params;
+//   console.log("updateStatus resId", reservationId)
+//   const data = await service.updateStatus(reservationId, status);
+//   res.status(200).json({ data });
+// }
 
 // updates reservation information
+// async function updateReservation(req, res) {
+//   const updatedReservation = { ...req.body.data };
+//   console.log("udpate, updatedRes", updatedReservation)
+//   const { reservationId } = req.params;
+//   console.log("update, reservationId", reservationId)
+//   const data = await service.update(reservationId, updatedReservation);
+//   res.status(200).json({ data });
+// }
 async function updateReservation(req, res) {
-  const updatedReservation = { ...req.body.data };
-  const { reservationId } = req.params;
-  const data = await service.update(reservationId, updatedReservation);
-  res.status(200).json({ data });
+  const { reservation } = res.locals;
+  console.log("res in updateRes", reservation)
+  const { data } = req.body;
+  const updatedReservationData = {
+    ...reservation,
+    ...data,
+  }
+  const updatedReservation = await service.update(updatedReservationData);
+  res.json({ data: updatedReservation });
 }
 
 module.exports = {

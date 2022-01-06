@@ -87,8 +87,6 @@ function tableCapacity(req, res, next) {
 
 function tableIsFree(req, res, next) {
     const { status } = res.locals.table;
-    console.log("TABLE_IS_FREE res.locals.table", res.locals.table)
-    console.log("TABLE_IS_FREE status", status)
     if (status.toLowerCase() === "free" || status === false) {
         return next();
     } else {
@@ -122,24 +120,43 @@ async function create(req, res) {
     res.status(201).json({ data: table });
 }
 
+// async function seat(req, res) {
+//     const { table } = res.locals;
+//     const { reservation_id } = res.locals.reservation;
+//     const { table_id } = req.params;
+//     const updatedTableData = {
+//         ...table,
+//         table_id: table_id,
+//         reservation_id: reservation_id,
+//         status: "occupied",
+//     }
+//     const updatedTable = await service.seat(updatedTableData);
+//     // set reservation status to "seated" using reservation id
+//     // const updatedReservation = {
+//     //     status: "seated", 
+//     //     reservation_id: reservation_id,
+//     // }
+//     await reservationService.updateStatus(reservation_id, "seated");
+//     res.json({ data: updatedTable });
+// }
 async function seat(req, res) {
-    const { table } = res.locals;
-    const { reservation_id } = res.locals.reservation;
-    const { table_id } = req.params;
-    const updatedTableData = {
-        ...table,
-        table_id: table_id,
-        reservation_id: reservation_id,
-        status: "occupied",
-    }
-    const updatedTable = await service.seat(updatedTableData);
-    // set reservation status to "seated" using reservation id
-    const updatedReservation = {
-        status: "seated", 
-        reservation_id: reservation_id,
-    }
-    await reservationService.update(updatedReservation);
-    res.json({ data: updatedTable });
+  const { table } = res.locals;
+  const { reservation_id } = res.locals.reservation;
+  const { table_id } = req.params;
+  const updatedTableData = {
+      ...table,
+      table_id: table_id,
+      reservation_id: reservation_id,
+      status: "Occupied",
+  }
+  const updatedTable = await service.seat(updatedTableData);
+  // set reservation status to "seated" using reservation id
+  const updatedReservation = {
+      status: "seated", 
+      reservation_id: reservation_id,
+  }
+  await reservationService.update(updatedReservation);
+  res.json({ data: updatedTable });
 }
 
 // finish an occupied table
@@ -156,6 +173,7 @@ async function finish(req, res) {
         status: "finished", 
         reservation_id: table.reservation_id,
     }
+    console.log("updatedRes", updatedReservation)
     await reservationService.update(updatedReservation); 
     res.status(200).json({ data: updatedTable });
 }

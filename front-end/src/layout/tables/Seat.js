@@ -71,7 +71,6 @@ export default function Seat() {
     setErrors(null);
     async function seatReservation() {
       try {
-        console.log("seat.js handling submit", formData, " & ", reservation.reservation_id)
         await seatTable(formData, reservation.reservation_id, abortController.signal);
         setErrors(null)
         history.push("/dashboard")

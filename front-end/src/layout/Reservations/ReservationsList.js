@@ -8,7 +8,6 @@ import { updateReservation, updateStatus } from '../../utils/api';
 export default function ReservationsList({ reservations, setReservation_id }) {
   const [errors, setErrors] = React.useState(null);
   const history = useHistory();
-  console.log('ReservationList', reservations)
 
   const filteredReservations = reservations
     .filter((reservation) => reservation.status.toLowerCase() === "booked" 
@@ -46,7 +45,7 @@ export default function ReservationsList({ reservations, setReservation_id }) {
         async function cancel() {
             try {
                 await updateStatus(reservation_id, "cancelled", abortController.signal);
-                history.go(0);
+                history.go();
             } catch (error) {
                 setErrors(error);
             }

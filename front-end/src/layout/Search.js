@@ -16,7 +16,6 @@ export default function Search() {
       .catch((error) => setErrors(error))
   }
 
-  console.log("reservation in Search", reservation)
   return (
     <div>
        <div>

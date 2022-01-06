@@ -9,7 +9,6 @@ import React from "react";
  */
 
  function ErrorAlert({ error }) {
-  console.log('error in ErrorAlert', error)
   if (error && error !== null && error.length !== 0) {
     let messages = Object.values(error)
     return (
