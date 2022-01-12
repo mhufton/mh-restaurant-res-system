@@ -8,6 +8,7 @@ import {
 } from '../../utils/api';
 import { formatAsDate } from '../../utils/date-time';
 import ErrorAlert from '../ErrorAlert';
+import "./ReservationForm.css"
 
 export default function ReservationForm() {
   const history = useHistory();
@@ -76,7 +77,7 @@ export default function ReservationForm() {
   };
 
   return (
-    <div>
+    <div className="form-container">
       <ErrorAlert error={errors} />
       {reservation_id ? <h1>Edit Reseravation</h1> : <h1>New Reservation</h1>}
       <form onSubmit={handleSubmit}>
@@ -154,22 +155,25 @@ export default function ReservationForm() {
             />
         </label>
         <br />
-        <button 
-          type="submit"
-          >Submit</button>
-        <button 
-          type='cancel' 
-          className='cancelButton'
-          onClick={() => {
-            const confirmBox = window.confirm(
-              "If you cancel all information will be lost"
-            )
-            if (confirmBox === true) {
-              history.go(-1);
-            }
-          }}>
-            Cancel
-          </button>
+        <div className="buttons-container">
+          <button 
+            type="submit"
+            className="submit-button"
+            >Submit</button>
+          <button 
+            type='cancel' 
+            className='cancel-button'
+            onClick={() => {
+              const confirmBox = window.confirm(
+                "If you cancel all information will be lost"
+              )
+              if (confirmBox === true) {
+                history.go(-1);
+              }
+            }}>
+              Cancel
+            </button>
+        </div>
       </form>
     </div>
   )

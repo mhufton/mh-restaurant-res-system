@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 
 import ErrorAlert from '../ErrorAlert';
 import { finishTable, updateStatus } from '../../utils/api';
+import "./TableList.css"
 
 export default function TableList({ tables }) {
   const history = useHistory();
@@ -32,11 +33,11 @@ export default function TableList({ tables }) {
     }
 
     return (
-      <div>
+      <div className="table-list-container">
         <div>
           {errors ? <ErrorAlert error={errors} /> : null}
         </div>
-        <div key={index} >
+        <div key={index} className="table-card">
           <p>Table: {table.table_name} -  {table.capacity}</p>
           <p data-table-id-status={`${table.table_id}`}>
           Status: {table.status} 
@@ -45,6 +46,7 @@ export default function TableList({ tables }) {
             ? <button 
               onClick={finishHandler}
               data-table-id-finish={table.table_id}
+              className="table-finish-button"
               >
                 Finish
               </button> 

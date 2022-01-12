@@ -1,0 +1,30 @@
+.table-card {
+  border-style: none;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  padding: 5px 0px 10px 5px;
+  background-color: #f7f6f6;
+}
+
+.table-card:hover {
+  background-color: #e8e8e8;
+  transform: scale(1.05);
+}
+
+.table-card button {
+  color: white;
+  background-color: #286fe0;
+  border-style: none;
+  border-radius: 10px;
+  margin: 0px 3px 0px 3px;
+  filter: drop-shadow(2px 2px 2px #4444dd);
+  transition-duration: 0.4s;
+}
+.table-card button:hover {
+  background-color: #6e6e6e;
+  filter: drop-shadow(2px 2px 2px #2e2e2e);
+}
+
+.table-finish-button {
+  margin-bottom: 5px;
+}

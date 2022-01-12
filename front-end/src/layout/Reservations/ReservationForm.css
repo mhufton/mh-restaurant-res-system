@@ -1,0 +1,38 @@
+.form-container {
+  margin: 5px;
+}
+
+.buttons-container {
+  margin-right: 5px;
+}
+
+.submit-button {
+  margin-top: 5px;
+  margin-right: 5px;
+  color: #286fe0;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #286fe0;
+  border-radius: 10px;
+  transition-duration: 0.4s;
+  background-color: white;
+}
+.submit-button:hover {
+  color: white;
+  background-color: #286fe0;
+}
+
+.cancel-button {
+  margin-top: 5px;
+  color: #F05454;
+  background-color: white;
+  border-color: #F05454;
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 10px;
+  transition-duration: 0.4s;
+}
+.cancel-button:hover {
+  color: white;
+  background-color: #F05454;
+}

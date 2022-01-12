@@ -4,6 +4,7 @@ import { Link, useHistory } from "react-router-dom";
 import ErrorAlert from '../ErrorAlert';
 import Reservation from './Reservation';
 import { updateReservation, updateStatus } from '../../utils/api';
+import "./ReservationList.css"
 
 export default function ReservationsList({ reservations, setReservation_id }) {
   const [errors, setErrors] = React.useState(null);
@@ -55,7 +56,7 @@ export default function ReservationsList({ reservations, setReservation_id }) {
     }
 
     return (
-      <div key={reservation.reservation_id}>
+      <div key={reservation.reservation_id} className="res-list-container">
         <div>
           
           {errors ? <ErrorAlert error={errors} /> : null}
@@ -65,23 +66,24 @@ export default function ReservationsList({ reservations, setReservation_id }) {
           ? <ErrorAlert error={"No reservations for this date"} />
           : <Reservation reservation={reservation} /> }
         </div>
-        <div>
+        <div className="res-buttons">
           {reservation.status === "booked"
             ? <a href={`/reservations/${reservation_id}/seat`}>
-                <button>
+                <button className="res-button-seat"> 
                   Seat
                 </button>
               </a>
             : null
           }
-          <a href={`/reservations/${reservation_id}/edit`}>
-            <button>
+          <a href={`/reservations/${reservation_id}/edit`} >
+            <button className="res-button-edit">
                 Edit
             </button>
           </a>
           <button 
             data-reservation-id-cancel={reservation.reservation_id}
             onClick={handleCancel}
+            className="res-button-cancel"
           >
             Cancel
           </button>

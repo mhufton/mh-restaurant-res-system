@@ -7,6 +7,7 @@ import useQuery from "../utils/useQuery"
 import ErrorAlert from "../layout/ErrorAlert";
 import ReservationsList from "../layout/Reservations/ReservationsList";
 import TableList from "../layout/tables/TableList";
+import './Dashboard.css';
 
 /**
  * Defines the dashboard page.
@@ -47,6 +48,8 @@ function Dashboard({ setReservation_id, date }) {
     loadDashboard();
     return () => abortController.abort();
   }, [date]);
+
+  // load tables
   useEffect(() => {
     const abortController = new AbortController();
     async function loadTables() {
@@ -65,40 +68,40 @@ function Dashboard({ setReservation_id, date }) {
  
   return (
     <main>
-      <h1>Dashboard</h1>
-      <div className="d-md-flex mb-3">
-        <h4 className="mb-0">Date: {date}</h4>
-      </div>
-      {/* <div>
-        <button onClick={handlePrevious}>Previous</button>
-        <button onClick={handleToday}>Today</button>
-        <button onClick={handleNext}>Next</button>
-      </div> */}
-      <div>
-        <Link to={`dashboard?date=${previous(date)}`}>
-          <button>Previous</button>
-        </Link>
-        <Link to={`dashboard?date=${today()}`}>
-          <button>Today</button>
-        </Link>
-        <Link to={`dashboard?date=${next(date)}`}>
-          <button>Next</button>
-        </Link>
-      </div>
-      <div>
-        <div>
-          <ErrorAlert error={dashboardError} />
+      <div className="main-container">
+        <h1>Dashboard</h1>
+        <div className="date-container">
+          <div>
+            <h4 className="mb-0">Date: {date}</h4>
+          </div>
+          <div className="date-buttons">
+            <Link to={`dashboard?date=${previous(date)}`}>
+              <button>Previous</button>
+            </Link>
+            <Link to={`dashboard?date=${today()}`}>
+              <button>Today</button>
+            </Link>
+            <Link to={`dashboard?date=${next(date)}`}>
+              <button>Next</button>
+            </Link>
+          </div>
         </div>
-        <div>
-          <h4>Reservations</h4>
-          {reservations.length > 0 || reservations === null
-            ? <ReservationsList reservations={reservations} setReservation_id={setReservation_id} />
-            : null
-          }
+        <div className="res-table-container">
+       
+          <div className="res-container">
+            <h4>Reservations</h4>
+            <div>
+            <ErrorAlert error={dashboardError} />
         </div>
-        <div>
-          <h4>Tables:</h4>
-          <TableList tables={tables} />
+            {reservations.length > 0 || reservations === null
+              ? <ReservationsList reservations={reservations} setReservation_id={setReservation_id} />
+              : null
+            }
+          </div>
+          <div className="table-container">
+            <h4>Tables:</h4>
+            <TableList tables={tables} />
+          </div>
         </div>
       </div>
     </main>

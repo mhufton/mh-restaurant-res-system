@@ -45,7 +45,7 @@ export default function NewTable() {
 
   return (
     <div>
-      <h1>New Reservations</h1>
+      <h1>New Table</h1>
       {tableErrors.length > 0 ? <ErrorAlert errors={tableErrors} /> : null}
       <form name='newTable' onSubmit={submitHandler}>
         <label>

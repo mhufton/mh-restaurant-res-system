@@ -1,0 +1,44 @@
+h1 {
+  text-align: center;
+  padding-top: 10px;
+}
+
+.date-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  padding-bottom: 10px;
+}
+
+.res-table-container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.res-container {
+  width: 350px;
+  padding: 5px;
+  flex-grow: 1;
+}
+
+.table-container {
+  width: 250px;
+  padding: 5px;
+}
+
+.date-buttons button {
+    color: white;
+    background-color: #286fe0;
+    border-style: none;
+    border-radius: 10px;
+    margin: 0px 3px 0px 3px;
+    filter: drop-shadow(2px 2px 2px #4444dd);
+    transition-duration: 0.4s;
+}
+
+.date-buttons button:hover {
+  background-color: #6e6e6e;
+  filter: drop-shadow(2px 2px 2px #2e2e2e);
+}

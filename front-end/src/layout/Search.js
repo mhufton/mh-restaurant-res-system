@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { listReservations } from '../utils/api'; 
 import Reservation from './Reservations/Reservation';
 import ErrorAlert from './ErrorAlert';
+import "./Search.css"
 
 export default function Search() {
   const [mobile_number, setMobile_number] = useState("");
@@ -17,12 +18,13 @@ export default function Search() {
   }
 
   return (
-    <div>
-       <div>
-      <ErrorAlert error={errors} />
-      </div>
+    <div className="search-container">
+      <h1>Search</h1>
       <div>
-        <form onSubmit={findHandler} >
+        <ErrorAlert error={errors} />
+      </div>
+      <div className="form-find-container">
+        <form onSubmit={findHandler} className="form-container">
           <input
             name="mobile_number"
             type="text"
@@ -30,11 +32,12 @@ export default function Search() {
             required
             onChange={(e) => setMobile_number(e.target.value)}
             value={mobile_number}
+            className="form-input"
           />
           <br />
-          <button type="submit">FIND</button>
+          <button type="submit" className="search-button">search</button>
         </form>
-        <div>
+        <div className="search-res-info">
           {reservation && reservation.length > 0 ? 
             reservation.map((reservation, index) => {
               return <Reservation reservation={reservation} key={index} />

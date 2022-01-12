@@ -1,0 +1,56 @@
+.search-container {
+  padding-top: 15px;
+}
+
+.form-find-container {
+  padding: 5px;
+  margin: 5px;
+}
+
+.search-res-info {
+  margin-top: 5px;
+}
+
+.search-button {
+  margin-top: 5px;
+  color: white;
+  background-color: #286fe0;
+  border-style: none;
+  border-radius: 10px;
+  filter: drop-shadow(2px 2px 2px #4444dd);
+  transition-duration: 0.4s;
+}
+.search-button:hover {
+  background-color: #6e6e6e;
+  filter: drop-shadow(2px 2px 2px #2e2e2e);
+}
+/* 
+.reservation-container {
+  display: flex;
+  flex-direction: row;
+  align-content: flex-start;
+  border-style: solid;
+  border-radius: 5px;
+  margin-bottom: 5px;
+}
+
+.reservation-container:hover {
+  background-color: #e8e8e8;
+  transform: scale(1.02);
+}
+
+.res-name {
+  flex: 2;
+}
+
+.res-date {
+  flex: 2;
+}
+
+.res-people {
+  flex: 2;
+}
+
+.res-status {
+  flex: 1;
+} */

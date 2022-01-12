@@ -1,0 +1,66 @@
+.res-list-container {
+  border-style: none;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  background-color: #f7f6f6;
+}
+
+.res-list-container:hover {
+  background-color: #e8e8e8;
+  transform: scale(1.02);
+}
+
+.res-buttons {
+  padding-left: 5px;
+  align-items: center;
+}
+
+.res-buttons {
+  margin-left: 5px;
+}
+
+.res-button-seat {
+  margin-right: 5px;
+  color: #286fe0;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #286fe0;
+  border-radius: 10px;
+  transition-duration: 0.4s;
+  background-color: white;
+}
+.res-button-seat:hover {
+  color: white;
+  background-color: #286fe0;
+}
+
+.res-button-edit {
+  margin-top: 5px;
+  margin-right: 5px;
+  color: #1fbd9b;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #1fbd9b;
+  border-radius: 10px;
+  transition-duration: 0.4s;
+  background-color: white;
+  }
+.res-button-edit:hover {
+  color: white;
+  background-color: #1fbd9b;
+}
+
+.res-button-cancel {
+  margin-top: 5px;
+  color: #F05454;
+  background-color: white;
+  border-color: #F05454;
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 10px;
+  transition-duration: 0.4s;
+}
+.res-button-cancel:hover {
+  color: white;
+  background-color: #F05454;
+}
