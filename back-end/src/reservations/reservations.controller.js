@@ -224,23 +224,7 @@ async function updateStatus(req, res) {
   const updatedReservation = await service.update(updatedReservationData);
   res.json({ data: updatedReservation });
 }
-// async function updateStatus(req, res) {
-//   const { status } = req.body.data;
-//   const { reservationId } = req.params;
-//   console.log("updateStatus resId", reservationId)
-//   const data = await service.updateStatus(reservationId, status);
-//   res.status(200).json({ data });
-// }
 
-// updates reservation information
-// async function updateReservation(req, res) {
-//   const updatedReservation = { ...req.body.data };
-//   console.log("udpate, updatedRes", updatedReservation)
-//   const { reservationId } = req.params;
-//   console.log("update, reservationId", reservationId)
-//   const data = await service.update(reservationId, updatedReservation);
-//   res.status(200).json({ data });
-// }
 async function updateReservation(req, res) {
   const { reservation } = res.locals;
   console.log("res in updateRes", reservation)
