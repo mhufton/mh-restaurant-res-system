@@ -27,19 +27,3 @@ function Layout() {
 }
 
 export default Layout;
-
-
-// function Layout() {
-//   return (
-//     <div className="app-c">
-//       <div className="row h-100">
-//         <div className="col-md-2 side-bar">
-//           <Menu />
-//         </div>
-//         <div className="routes-container">
-//           <Routes />
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }

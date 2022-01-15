@@ -1,4 +1,5 @@
-.reservation-container {
+/* dashboard reservation css */
+.res-container .reservation-container {
   display: flex;
   flex-direction: row;
   padding: 10px 10px 5px 10px;
@@ -6,10 +7,11 @@
   justify-content: space-between;
 }
 
-.reservation-container p {
+.res-container .reservation-container p {
   padding-right: 10px;
 }
 
-.people-status-container {
+.res-container .people-status-container {
   flex-wrap: wrap;
 }
+

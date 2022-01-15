@@ -7,6 +7,7 @@ import { today } from "../utils/date-time";
 import NewReservation from "./Reservations/NewReservation";
 import NewTable from "./tables/NewTable";
 import Search from "./Search";
+// import Reservation from "./Reservations/Reservation/Reservation";
 import Reservation from "./Reservations/Reservation";
 import Seat from "./tables/Seat";
 import EditReservation from "./Reservations/EditReservation";

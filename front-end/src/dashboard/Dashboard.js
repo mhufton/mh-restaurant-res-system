@@ -87,14 +87,17 @@ function Dashboard({ setReservation_id, date }) {
           </div>
         </div>
         <div className="res-table-container">
-       
           <div className="res-container">
             <h4>Reservations</h4>
             <div>
-            <ErrorAlert error={dashboardError} />
-        </div>
+              <ErrorAlert error={dashboardError} />
+            </div>
             {reservations.length > 0 || reservations === null
-              ? <ReservationsList reservations={reservations} setReservation_id={setReservation_id} />
+              ? <ReservationsList 
+                  reservations={reservations}
+                  setReservation_id={setReservation_id} 
+                  className="dashboard-res-container"
+                  />
               : null
             }
           </div>

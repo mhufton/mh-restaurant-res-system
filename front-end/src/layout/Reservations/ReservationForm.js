@@ -6,7 +6,6 @@ import {
   readReservation,
   updateReservation,
 } from '../../utils/api';
-import { formatAsDate } from '../../utils/date-time';
 import ErrorAlert from '../ErrorAlert';
 import "./ReservationForm.css"
 
@@ -77,104 +76,111 @@ export default function ReservationForm() {
   };
 
   return (
-    <div className="form-container">
+    <div className="res-form-container">
+      <div className="form-header-container">
+        {reservation_id ? <h1>Edit Reseravation</h1> : <h1>New Reservation</h1>}
+      </div>
       <ErrorAlert error={errors} />
-      {reservation_id ? <h1>Edit Reseravation</h1> : <h1>New Reservation</h1>}
-      <form onSubmit={handleSubmit}>
-        <label>
-          First Name:
-          <input 
-            type="text"
-            id='first_name'
-            name="first_name"
-            required={true}
-            placeholder='enter first name'
-            onChange={handleChange}
-            value={formData.first_name}
+      <div className="res-form-container">
+        <form onSubmit={handleSubmit} className="res-form">
+          <label className="first-name">
+            First Name:
+            <input 
+              type="text"
+              id='first_name'
+              name="first_name"
+              required={true}
+              placeholder='enter first name'
+              onChange={handleChange}
+              value={formData.first_name}
+              className="field-input"
+              />
+          </label>
+          <br />
+          <label>
+            Last Name:
+            <input 
+              type='text'
+              id="last_name"
+              name="last_name"
+              required={true}
+              placeholder='enter last name'
+              onChange={handleChange}
+              value={formData.last_name}
+              />
+          </label>
+          <br />
+          <label>
+            Phone Number:
+            <input
+              type="text"
+              id='mobile_number'
+              name='mobile_number'
+              required={true}
+              placeholder='enter phone number'
+              onChange={handleChange}
+              value={formData.mobile_number}
             />
-        </label>
-        <br />
-        <label>
-          Last Name:
-          <input 
-            type='text'
-            id="last_name"
-            name="last_name"
-            required={true}
-            placeholder='enter last name'
-            onChange={handleChange}
-            value={formData.last_name}
-            />
-        </label>
-        <br />
-        <label>
-          Phone Number:
-          <input
-            type="text"
-            id='mobile_number'
-            name='mobile_number'
-            required={true}
-            placeholder='enter phone number'
-            onChange={handleChange}
-            value={formData.mobile_number}
-          />
-        </label>
-        <br />
-        <label>Reservation Date:</label>
-          <input 
-            type="date"
-            id="date"
-            name="reservation_date"
-            required={true}
-            onChange={handleChange}
-            value={formData.reservation_date}
-            />
-        <br />
-        <label>
-          Reservation Time:
-          <input 
-            type="time"
-            id="time"
-            name="reservation_time"
-            required={true}
-            onChange={handleChange}
-            value={formData.reservation_time}
-            />
-        </label>
-        <br />
-        <label>
-          People in party:
-          <input 
-            type='number' 
-            id="people"
-            name='people'
-            required={true}
-            placeholder='enter number'
-            onChange={handleChange}
-            value={formData.people}
-            />
-        </label>
-        <br />
-        <div className="buttons-container">
-          <button 
-            type="submit"
-            className="submit-button"
-            >Submit</button>
-          <button 
-            type='cancel' 
-            className='cancel-button'
-            onClick={() => {
-              const confirmBox = window.confirm(
-                "If you cancel all information will be lost"
-              )
-              if (confirmBox === true) {
-                history.go(-1);
-              }
-            }}>
-              Cancel
-            </button>
-        </div>
-      </form>
+          </label>
+          <br />
+          <label>
+            Reservation Date:
+            <input 
+              type="date"
+              id="date"
+              name="reservation_date"
+              required={true}
+              onChange={handleChange}
+              value={formData.reservation_date}
+              />
+          </label>
+          <br />
+          <label>
+            Reservation Time:
+            <input 
+              type="time"
+              id="time"
+              name="reservation_time"
+              required={true}
+              onChange={handleChange}
+              value={formData.reservation_time}
+              />
+          </label>
+          <br />
+          <label>
+            People in party:
+            <input 
+              type='number' 
+              id="people"
+              name='people'
+              required={true}
+              placeholder='enter number'
+              onChange={handleChange}
+              value={formData.people}
+              />
+          </label>
+          <br />
+          <div className="buttons-container">
+            <button 
+              type="submit"
+              className="submit-button"
+              >Submit</button>
+            <button 
+              type='cancel' 
+              className='cancel-button'
+              onClick={() => {
+                const confirmBox = window.confirm(
+                  "If you cancel all information will be lost"
+                )
+                if (confirmBox === true) {
+                  history.go(-1);
+                }
+              }}>
+                Cancel
+              </button>
+          </div>
+        </form>
+      </div>
     </div>
   )
 }

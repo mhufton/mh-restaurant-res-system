@@ -17,9 +17,10 @@ h1 {
   align-items: flex-start;
 }
 
-.res-container {
+.res-table-container .res-container {
   width: 350px;
   padding: 5px;
+  margin-bottom: 5px;
   flex-grow: 1;
 }
 
@@ -29,13 +30,13 @@ h1 {
 }
 
 .date-buttons button {
-    color: white;
-    background-color: #286fe0;
-    border-style: none;
-    border-radius: 10px;
-    margin: 0px 3px 0px 3px;
-    filter: drop-shadow(2px 2px 2px #4444dd);
-    transition-duration: 0.4s;
+  color: white;
+  background-color: #286fe0;
+  border-style: none;
+  border-radius: 10px;
+  margin: 0px 3px 0px 3px;
+  filter: drop-shadow(1px 1px 1px #4444dd);
+  transition-duration: 0.4s;
 }
 
 .date-buttons button:hover {

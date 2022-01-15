@@ -18,26 +18,6 @@ export default function ReservationsList({ reservations, setReservation_id }) {
   return filteredReservations.map((reservation, index) => {
     const reservation_id = reservation.reservation_id;
 
-    // const handleCancel = (event) => {
-    //   event.preventDefault();
-    //   const abortController = new AbortController();
-    //   const confirmWindow = window.confirm(
-    //     "Do you want to cancel this reservation? This cannot be undone."
-    //   );
-    //   if (confirmWindow) {
-    //     async function updatingReservation() {
-    //       try {
-    //         await updateStatus(reservation.reservation_id, "cancelled", abortController.signal) 
-    //         history.go();
-    //       } catch (error) {
-    //         setErrors(error)
-    //       }
-    //     }
-    //     updatingReservation();
-    //     return () => abortController.abort();
-    //   } 
-    // }
-
     const handleCancel = (event) => {
       event.preventDefault();
       if (window.confirm("Do you want to cancel this reservation? This cannot be undone.")) {

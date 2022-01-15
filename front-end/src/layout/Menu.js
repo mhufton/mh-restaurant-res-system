@@ -32,25 +32,25 @@ function Menu() {
           <li className="nav-item">
             <Link className="nav-link" to="/dashboard" style={dashColor}>
               <span className="oi oi-dashboard"/>
-              &nbsp;Dashboard
+              <div className="link-text">&nbsp;Dashboard</div>
             </Link>
           </li>
           <li className="nav-item">
             <Link className="nav-link" to="/search" style={dashColor}>
               <span className="oi oi-magnifying-glass" />
-              &nbsp;Search
+              <div className="link-text">&nbsp;Search</div>
             </Link>
           </li>
           <li className="nav-item">
             <Link className="nav-link" to="/reservations/new" style={dashColor}>
               <span className="oi oi-plus" />
-              &nbsp;New Reservation
+              <div className="link-text">&nbsp;New Reservation</div>
             </Link>
           </li>
           <li className="nav-item">
             <Link className="nav-link" to="/tables/new" style={dashColor}>
               <span className="oi oi-layers" />
-              &nbsp;New Table
+              <div className="link-text">&nbsp;New Table</div>
             </Link>
           </li>
         </ul>

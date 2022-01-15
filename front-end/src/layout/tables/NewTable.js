@@ -3,6 +3,7 @@ import { useHistory } from 'react-router';
 
 import ErrorAlert from './../ErrorAlert';
 import { createTable } from '../../utils/api';
+import "./NewTable.css"
 
 export default function NewTable() {
   const history = useHistory();
@@ -44,10 +45,13 @@ export default function NewTable() {
   }
 
   return (
-    <div>
+    <div className="table-container">
       <h1>New Table</h1>
       {tableErrors.length > 0 ? <ErrorAlert errors={tableErrors} /> : null}
-      <form name='newTable' onSubmit={submitHandler}>
+      <form name='newTable'
+        className="new-table-form"
+        onSubmit={submitHandler}
+        >
         <label>
           Table Name:
           <input 
@@ -74,10 +78,11 @@ export default function NewTable() {
         <br />
         <button 
           type="submit"
+          className="submit-button"
           >Submit</button>
         <button 
           type='cancel' 
-          className='cancelButton'
+          className='cancel-button'
           onClick={() => {
             const confirmBox = window.confirm(
               "If you cancel all information will be lost"

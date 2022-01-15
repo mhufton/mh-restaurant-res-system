@@ -19,31 +19,33 @@ export default function Search() {
 
   return (
     <div className="search-container">
-      <h1>Search</h1>
+      <div className="search-header-container">
+        <h1>Search</h1>
+        <div className="search-container">
+          <form onSubmit={findHandler} className="form-container">
+            <input
+              name="mobile_number"
+              type="text"
+              placeholder="Enter a customer's phone number."
+              required
+              onChange={(e) => setMobile_number(e.target.value)}
+              value={mobile_number}
+              className="form-input"
+            />
+            <br />
+            <button type="submit" className="search-button">Search</button>
+          </form>
+        </div>
+      </div>
       <div>
         <ErrorAlert error={errors} />
       </div>
-      <div className="form-find-container">
-        <form onSubmit={findHandler} className="form-container">
-          <input
-            name="mobile_number"
-            type="text"
-            placeholder="Enter a customer's phone number."
-            required
-            onChange={(e) => setMobile_number(e.target.value)}
-            value={mobile_number}
-            className="form-input"
-          />
-          <br />
-          <button type="submit" className="search-button">search</button>
-        </form>
-        <div className="search-res-info">
-          {reservation && reservation.length > 0 ? 
-            reservation.map((reservation, index) => {
-              return <Reservation reservation={reservation} key={index} />
-            }) 
-            : <p>No Reservation Found</p>}
-        </div>
+      <div className="search-info">
+        {reservation && reservation.length > 0 ? 
+          reservation.map((reservation, index) => {
+            return <Reservation reservation={reservation} key={index} />
+          }) 
+          : <p>No Reservation Found</p>}
       </div>
     </div>
   ) 
