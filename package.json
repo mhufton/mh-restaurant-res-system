@@ -49,6 +49,7 @@
   "author": "Thinkful, Inc.",
   "license": "UNLICENSED",
   "dependencies": {
+    "heroku": "^7.59.2",
     "puppeteer": "^13.0.1"
   }
 }
