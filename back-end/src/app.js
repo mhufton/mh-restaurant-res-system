@@ -15,6 +15,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.get('/allow-cors', function(request, response) {
+  response.set('Access-Control-Allow-Origin', '*');
+  response.sendFile(__dirname + '/message.json');
+});
+
 app.use("/reservations", reservationsRouter);
 app.use("/tables", tablesRouter);
 
