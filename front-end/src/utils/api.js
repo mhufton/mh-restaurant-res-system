@@ -11,7 +11,9 @@
   * Defines the default headers for these functions to work with `json-server`
   */
  const headers = new Headers();
- headers.append("Content-Type", "application/json", `Access-Control-Allow-Origin: ${API_BASE_URL}`);
+ console.log("headers before", headers)
+ headers.append("Content-Type", "application/json");
+ console.log("headers after", headers)
  
  /**
   * Fetch `json` from the specified URL and handle error status codes and ignore `AbortError`s
