@@ -11,7 +11,7 @@
   * Defines the default headers for these functions to work with `json-server`
   */
  const headers = new Headers();
- headers.append("Content-Type", "application/json", "Access-Control-Allow-Origin: https://mh-restaurant-res-front-end.herokuapp.com");
+ headers.append("Content-Type", "application/json", `Access-Control-Allow-Origin: ${API_BASE_URL}`);
  
  /**
   * Fetch `json` from the specified URL and handle error status codes and ignore `AbortError`s
