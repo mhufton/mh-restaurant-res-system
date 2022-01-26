@@ -1,6 +1,6 @@
 # Periodic Tables: Restaurant Reservation System
 
-> Live deployment on Heroku: <br> [Elite Seat]NEED SITE
+> Live deployment on Heroku: <br> [Periodic Tables]https://mh-restaurant-res-sys-frontend.herokuapp.com/dashboard
 
 
 
