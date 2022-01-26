@@ -1,9 +1,9 @@
 import React from 'react';
-import { Link, useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 
 import ErrorAlert from '../ErrorAlert';
 import Reservation from './Reservation';
-import { updateReservation, updateStatus } from '../../utils/api';
+import { updateStatus } from '../../utils/api';
 import "./ReservationList.css"
 
 export default function ReservationsList({ reservations, setReservation_id }) {
@@ -24,16 +24,17 @@ export default function ReservationsList({ reservations, setReservation_id }) {
         const abortController = new AbortController();
         // PUT request
         async function cancel() {
-            try {
-                await updateStatus(reservation_id, "cancelled", abortController.signal);
-                history.go();
-            } catch (error) {
-                setErrors(error);
-            }
+          try {
+            await updateStatus(reservation_id, "cancelled", abortController.signal);
+            history.go();
+          } catch (error) {
+            setErrors(error);
+          }
         }
         cancel();
       }
     }
+    console.log(`reservation ${reservation.reservation_id}`, reservation)
 
     return (
       <div key={reservation.reservation_id} className="res-list-container">
@@ -44,23 +45,26 @@ export default function ReservationsList({ reservations, setReservation_id }) {
         <div>
         {!reservations 
           ? <ErrorAlert error={"No reservations for this date"} />
-          : <Reservation reservation={reservation} /> }
+          : <Reservation reservation={reservation} handleCancel={handleCancel} /> }
         </div>
         <div className="res-buttons">
-          {reservation.status === "booked"
-            ? <a href={`/reservations/${reservation_id}/seat`}>
-                <button className="res-button-seat"> 
+          {reservation.status === "booked" ? (
+            <>
+              <a href={`/reservations/${reservation.reservation_id}/seat`} >
+                <button className="res-button-seat" type="submit">
                   Seat
                 </button>
               </a>
-            : null
-          }
-          <a href={`/reservations/${reservation_id}/edit`} >
-            <button className="res-button-edit">
-                Edit
-            </button>
-          </a>
+
+              <a href={`/reservations/${reservation.reservation_id}/edit`} >
+                <button className="res-button-edit" >
+                  Edit
+                </button>
+              </a>
+            </>
+          ) : null}
           <button 
+            type="cancel"
             data-reservation-id-cancel={reservation.reservation_id}
             onClick={handleCancel}
             className="res-button-cancel"

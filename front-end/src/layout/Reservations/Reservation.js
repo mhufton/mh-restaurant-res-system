@@ -1,7 +1,7 @@
 import React from 'react';
 import './Reservation.css'
 
-export default function Reservation({ reservation }) {
+export default function Reservation({ reservation, handleCancel }) {
   if (reservation) {
     return (
       <div key={reservation.reservation_id} className="reservation-container">
@@ -15,7 +15,7 @@ export default function Reservation({ reservation }) {
             data-reservation-id-status={reservation.reservation_id}
             className="res-status"
           >
-            {reservation.status ? reservation.status : "booked"}
+            {reservation.status}
           </p>
         </div>
       </div>

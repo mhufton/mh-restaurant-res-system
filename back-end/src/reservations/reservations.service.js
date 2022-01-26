@@ -1,13 +1,26 @@
 const knex = require("../db/connection");
 
-// list reservations by date, sorted by time
-function list(date) {
-    return knex("reservations")
-        .select("*")
-        .where({ reservation_date: date})
-        .whereNot({ status: "finished"})
-        .andWhereNot({ status: "cancelled" })
-        .orderBy("reservation_time");
+function list() {
+  return knex("reservations");
+}
+
+function listByDate(reservation_date) {
+  reservation_date = new Date(reservation_date).toJSON().substring(0, 10);
+  return knex("reservations")
+    .select("*")
+    .where({ reservation_date })
+    .whereNot({ status: "finished" })
+    .whereNot({ status: "cancelled" })
+    .orderBy("reservation_time");
+}
+
+function listByPhone(mobile_number) {
+  return knex("reservations")
+    .whereRaw(
+      "translate(mobile_number, '() -', '') like ?",
+      `%${mobile_number.replace(/\D/g, "")}%`
+    )
+    .orderBy("reservation_date");
 }
 
 // post a new reservation
@@ -34,27 +47,6 @@ function update(updatedReservation) {
     .update(updatedReservation, "*")
     .then((result) => result[0]);
 }
-// function update(reservation_id, updatedReservation) {
-//     return knex("reservations")
-//       .where({ reservation_id: reservation_id })
-//       .update({ ...updatedReservation }, "*")
-//       .then((result) => result[0]);
-// }
-// function update(reservationId, updatedReservation) {
-//   return knex("reservations")
-//     .where({ reservation_id: reservationId })
-//     .update({...updatedReservation})
-//     .returning("*")
-// }
-
-
-// updates just the status
-// function updateStatus(reservationId, status) {
-//   return knex("reservations")
-//     .where({ reservation_id: reservationId })
-//     .update({ status }, "*")
-//     .then((result) => result[0]);
-// }
 
 // finds a reservation by phone number
 function find(mobile_number) {
@@ -68,9 +60,10 @@ function find(mobile_number) {
 
 module.exports = {
     list,
+    listByDate,
+    listByPhone,
     create,
     read,
     update,
-    // updateStatus,
     find,
 }

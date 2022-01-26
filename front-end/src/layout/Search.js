@@ -37,15 +37,12 @@ export default function Search() {
           </form>
         </div>
       </div>
-      <div>
-        <ErrorAlert error={errors} />
-      </div>
       <div className="search-info">
         {reservation && reservation.length > 0 ? 
           reservation.map((reservation, index) => {
             return <Reservation reservation={reservation} key={index} />
           }) 
-          : <p>No Reservation Found</p>}
+          : <p className="text-danger">No reservations found</p>}
       </div>
     </div>
   ) 

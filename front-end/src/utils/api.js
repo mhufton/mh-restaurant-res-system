@@ -11,9 +11,7 @@
   * Defines the default headers for these functions to work with `json-server`
   */
  const headers = new Headers();
- console.log("headers before", headers)
  headers.append("Content-Type", "application/json");
- console.log("headers after", headers)
  
  /**
   * Fetch `json` from the specified URL and handle error status codes and ignore `AbortError`s
@@ -83,14 +81,20 @@
  
  // posts a new table to the database
   export async function createTable(table, signal) {
-   const url = `${API_BASE_URL}/tables`;
-   const options = {
-     method: "POST",
-     headers,
-     body: JSON.stringify({data: table}),
-     signal,
-   };
-   return await fetchJson(url, options, {})
+  console.log("inside api", table)
+  const newTable = {
+    ...table,
+    capacity: parseInt(table.capacity)
+  }
+  console.log("newTable", newTable)
+  const url = `${API_BASE_URL}/tables`;
+  const options = {
+    method: "POST",
+    headers,
+    body: JSON.stringify({ data: newTable }),
+    signal,
+  };
+  return await fetchJson(url, options, {})
  }
  
  // gets a list of all existing tables in the database
@@ -109,6 +113,7 @@
  
  // seats a reservation by table_id
  export async function seatTable(table, reservation_id, signal) {
+   console.log('inside seat api')
    const { table_id } = table;
    const url = `${API_BASE_URL}/tables/${table_id}/seat`;
    const options = {

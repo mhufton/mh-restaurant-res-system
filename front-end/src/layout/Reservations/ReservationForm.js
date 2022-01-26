@@ -13,7 +13,6 @@ export default function ReservationForm() {
   const history = useHistory();
   const params = useParams();
   const reservation_id = Number(params.reservation_id);
-  const newRes = Object.keys(params).length;
 
   const [formData, setFormData] = useState({
     first_name: "",
@@ -168,14 +167,8 @@ export default function ReservationForm() {
             <button 
               type='cancel' 
               className='cancel-button'
-              onClick={() => {
-                const confirmBox = window.confirm(
-                  "If you cancel all information will be lost"
-                )
-                if (confirmBox === true) {
-                  history.go(-1);
-                }
-              }}>
+              type='button'
+              onClick={() => history.go(-1)}>
                 Cancel
               </button>
           </div>

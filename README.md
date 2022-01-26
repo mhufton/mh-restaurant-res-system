@@ -336,7 +336,7 @@ so that I can see which reservation parties are seated, and finished reservation
    - display the Seat button only when the reservation status is "booked".
    - clicking the Seat button changes the status to "seated" and hides the Seat button.
    - clicking the Finish button associated with the table changes the reservation status to "finished" and removes the reservation from the dashboard.
-   - to set the status, PUT to `/reservations/:reservation_id/status` with a body of `{data: { status: "<new-status>" } }` where `<new-status>` is one of booked, seated, or finished
+   - to set the status, PUT to `/reservations/:reservation_id/status` with a body of `{data: { status: "<new-status>" } }` where `<new-status>` is one of booked, seated, or finished. Please note that this is only tested in the back-end for now.
 
 > **Hint** You can add a field to a table in a migration `up` method by defining a new column. E.g. `table.string("last_name", null).notNullable();` will create a new last_name column.  Be sure to remove the column in the `down` function using `dropColumn()`. E.g. `table.dropColumn("last_name");`
 
@@ -353,7 +353,7 @@ so that I can quickly access a customer's reservation when they call about their
 1. The `/search` page will
    - Display a search box `<input name="mobile_number" />` that displays the placeholder text: "Enter a customer's phone number"
    - Display a "Find" button next to the search box.
-   - Clicking on the "Find" button will submit a request to the server (e.g. GET `/reservations?mobile_phone=555-1212`).
+   - Clicking on the "Find" button will submit a request to the server (e.g. GET `/reservations?mobile_number=800-555-1212`).
      - then the system will look for the reservation(s) in the database and display all matched records on the `/search` page using the same reservations list component as the `/dashboard` page.
      - the search page will display all reservations matching the phone number, regardless of status.
    - display `No reservations found` if there are no records found after clicking the Find button.

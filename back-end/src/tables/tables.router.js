@@ -8,6 +8,12 @@ router
   .delete(controller.finish)
   .all(methodNotAllowed);
 
+// router
+//   .route("/:table_id([0-9]+)/seat")
+//   .put(controller.updateSeatReservation)
+//   .delete(controller.deleteSeatReservation)
+//   .all(methodNotAllowed);
+
 router
   .route("/")
   .get(controller.list)

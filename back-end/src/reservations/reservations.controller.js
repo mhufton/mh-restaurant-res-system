@@ -126,32 +126,6 @@ function statusBooked(req, res, next) {
   }
 }
 
-
-
-// validation middleware: checks the request query 
-// if query is date, check that the selected date has reservations that aren't finished
-// if query is mobile_number, look for reservations matching that number
-async function byDateOrPhone(req, res, next) {
-  const { date, mobile_number } = req.query;
-  if (date) {
-    const reservations = await service.list(date);
-    if (reservations.length) {
-      res.locals.data = reservations;
-      return next();
-    } else {
-      return next({
-        status: 404, 
-        message: `There are currently no pending reservations for ${date}`,
-      });
-    }
-  } 
-  if (mobile_number) {
-    const reservation = await service.find(mobile_number);
-    res.locals.data = reservation;
-    return next();
-  }
-}
-
 // validation middleware: checks if a reservation_id exists
 async function reservationExists(req, res, next) {
   const { reservationId } = req.params;
@@ -195,11 +169,21 @@ function statusIsNotFinished(req, res, next) {
   }
 }
 
-
-// list reservations by date
-function list(req, res) {
-  const { data } = res.locals;
-  res.json({ data: data });
+async function list(req, res) {
+  const { date, viewDate, mobile_number } = req.query;
+  if (date) {
+    const data = await service.listByDate(date);
+    res.json({ data });
+  } else if (viewDate) {
+    const data = await service.listByDate(viewDate);
+    res.json({ data });
+  } else if (mobile_number) {
+    const data = await service.listByPhone(mobile_number);
+    res.json({ data });
+  } else {
+    const data = await service.list();
+    res.json({ data });
+  }
 }
 
 // creates a reservation
@@ -227,7 +211,6 @@ async function updateStatus(req, res) {
 
 async function updateReservation(req, res) {
   const { reservation } = res.locals;
-  console.log("res in updateRes", reservation)
   const { data } = req.body;
   const updatedReservationData = {
     ...reservation,
@@ -239,8 +222,7 @@ async function updateReservation(req, res) {
 
 module.exports = {
   list: [
-    asyncErrorBoundary(byDateOrPhone), 
-    list,
+    asyncErrorBoundary(list)
   ],
   create: [
     hasProperties(...REQUIRED_PROPERTIES), 

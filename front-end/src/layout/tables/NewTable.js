@@ -10,38 +10,27 @@ export default function NewTable() {
 
   const [formData, setFormData] = useState({
     table_name: "",
-    capacity: "",
+    capacity: "0",
    });
   const [tableErrors, setTableErrors] = useState([])
-
   const handleChange = ({ target }) => {
     setFormData({
       ...formData,
       [target.name]: target.value,
     })
   }
-
-  const validateTable = () => {
-    if (formData.table_name.length < 2) {
-      setTableErrors("Table names must be at least 2 characters long.")
-    }
-    if (formData.capacity < 1) {
-      setTableErrors("Table capacity must be at least 1 person.")
-    }
-  
-    if (tableErrors.length > 0) {
-      return false
-    }
-    return true
-  }
   
   const submitHandler = (e) => {
     e.preventDefault();
-    if (validateTable()) {
-      createTable(formData)
-        .then(() => history.push(`/dashboard`))
-        .catch((error) => setTableErrors(error))
-    }
+    console.log("formData", formData)
+    // const newTable = {
+    //   ...formData,
+    //   capacity: Number(formData.capacity)
+    // }
+    // console.log("capacity type:", typeof(Number(newTable.capacity)))
+    createTable(formData)
+      .then(() => history.push(`/dashboard`))
+      .catch((error) => setTableErrors(error))
   }
 
   return (
@@ -83,13 +72,7 @@ export default function NewTable() {
         <button 
           type='cancel' 
           className='cancel-button'
-          onClick={() => {
-            const confirmBox = window.confirm(
-              "If you cancel all information will be lost"
-            )
-            if (confirmBox === true) {
-            }
-          }}>
+          onClick={() => history.go(-1)}>
             Cancel
           </button>
       </form>

@@ -4,8 +4,7 @@ import { useHistory, useParams } from 'react-router';
 import { 
   listTables,
   readReservation,
-  seatTable,
-  updateStatus,
+  seatTable
 } from '../../utils/api';
 import Reservation from '../Reservations/Reservation';
 import ErrorAlert from '../ErrorAlert';
@@ -108,8 +107,8 @@ export default function Seat() {
               {tableMapper()}
               </select>
               <br />
-              <button>Submit</button>
-              <button onClick={handleCancel}>Cancel</button>
+              <button type="submit">Submit</button>
+              <button onClick={handleCancel} type="cancel">Cancel</button>
           </div>
         </form>
       </div>

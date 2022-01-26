@@ -26,11 +26,6 @@ function Dashboard({ setReservation_id, date }) {
   const [tables, setTables] = useState([]);
   const [dashboardError, setDashboardError] = useState([]);
   
-
-  // formats the date variable to be human readable
-  const dateObj = new Date(`${date} PDT`);
-  const dateString = dateObj.toDateString();
-
   // load the reservations by date
   useEffect(() => {
     const abortController = new AbortController();
@@ -47,7 +42,7 @@ function Dashboard({ setReservation_id, date }) {
     }
     loadDashboard();
     return () => abortController.abort();
-  }, [date]);
+  }, [date, dateQuery]);
 
   // load tables
   useEffect(() => {
