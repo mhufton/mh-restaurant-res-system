@@ -8,6 +8,7 @@ import {
 } from '../../utils/api';
 import Reservation from '../Reservations/Reservation';
 import ErrorAlert from '../ErrorAlert';
+import "./Seat.css"
 
 export default function Seat() {
   const history = useHistory();
@@ -87,28 +88,37 @@ export default function Seat() {
   }
 
   return (
-    <div>
+    <div className="seat-container">
       <ErrorAlert error={errors} />
-      <div>
+      <div className="seat-res-container">
         <h4>Reservation for:</h4>
         <Reservation reservation={reservation} />
       </div>
       <br />
       <div>
         <h4>Select a table</h4>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="seat-form-container">
           <div>
             <select
               name="table_id"
               onChange={handleChange}
               value={formData.table_id}
+              className="seat-select"
             > 
               <option>Choose a Table</option>
               {tableMapper()}
               </select>
               <br />
-              <button type="submit">Submit</button>
-              <button onClick={handleCancel} type="cancel">Cancel</button>
+              <button 
+                type="submit" className="seat-submit-button">
+                  Submit
+                </button>
+              <button 
+                onClick={handleCancel}
+                type="cancel"
+                className="seat-cancel-button">
+                  Cancel
+                </button>
           </div>
         </form>
       </div>
