@@ -2,19 +2,17 @@ import React, { useState } from 'react';
 
 import { listReservations } from '../utils/api'; 
 import Reservation from './Reservations/Reservation';
-import ErrorAlert from './ErrorAlert';
 import "./Search.css"
 
 export default function Search() {
   const [mobile_number, setMobile_number] = useState("");
   const [reservation, setReservation] = useState(null);
-  const [errors, setErrors] = useState(null);
 
   const findHandler = (e) => {
     e.preventDefault();
     listReservations({ mobile_number })
       .then((response) => setReservation(response))
-      .catch((error) => setErrors(error))
+      .catch((error) => console.log(error))
   }
 
   return (

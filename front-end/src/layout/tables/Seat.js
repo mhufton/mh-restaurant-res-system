@@ -13,8 +13,6 @@ import "./Seat.css"
 export default function Seat() {
   const history = useHistory();
   const params = useParams();
-  const newParams = Object.values(params)
-  const abortController = new AbortController();
   
   const [reservation, setReservation] = useState([]);
   const [tables, setTables] = useState([]);
@@ -22,10 +20,11 @@ export default function Seat() {
   const [formData, setFormData] = useState({ table_id: "" });
   
   useEffect(() => {
+    const abortController = new AbortController();
     async function loadData() {
        try {
-         setErrors(null)
-        const reservationFetch = await readReservation(newParams, abortController.signal);
+        setErrors(null)
+        const reservationFetch = await readReservation(params.reservationId, abortController.signal);
         const tablesFetch = await listTables(abortController.signal);
         const freeTables = tablesFetch.filter(table => {
           return table.status.toLowerCase() === "free";
@@ -38,8 +37,8 @@ export default function Seat() {
     }
     loadData();
     return () => abortController.abort();
-  }, [])
-
+  }, [params]) 
+  
   const tableMapper = () => {
     return tables.map((table, index) => {
       return (
@@ -50,7 +49,7 @@ export default function Seat() {
       )
     })
   }
-
+  
   const handleChange = ({ target }) => {
     const selectedTable = tables.find(table => table.table_id === parseInt(target.value));
     if (selectedTable && selectedTable.capacity < reservation.people) {
@@ -70,6 +69,7 @@ export default function Seat() {
     e.preventDefault();
     setErrors(null);
     async function seatReservation() {
+      const abortController = new AbortController();
       try {
         await seatTable(formData, reservation.reservation_id, abortController.signal);
         setErrors(null)

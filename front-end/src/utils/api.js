@@ -81,12 +81,10 @@
  
  // posts a new table to the database
   export async function createTable(table, signal) {
-  console.log("inside api", table)
   const newTable = {
     ...table,
     capacity: parseInt(table.capacity)
   }
-  console.log("newTable", newTable)
   const url = `${API_BASE_URL}/tables`;
   const options = {
     method: "POST",
@@ -104,8 +102,8 @@
  }  
  
  // reads a reservation by reservation_id
- export async function readReservation(reservation_id, signal) {
-   const url = `${API_BASE_URL}/reservations/${reservation_id}`;
+ export async function readReservation(reservationId, signal) {
+   const url = `${API_BASE_URL}/reservations/${reservationId}`;
    return await fetchJson(url, { signal })
     .then(formatReservationDate)
     .then(formatReservationTime);
@@ -113,7 +111,6 @@
  
  // seats a reservation by table_id
  export async function seatTable(table, reservation_id, signal) {
-   console.log('inside seat api')
    const { table_id } = table;
    const url = `${API_BASE_URL}/tables/${table_id}/seat`;
    const options = {

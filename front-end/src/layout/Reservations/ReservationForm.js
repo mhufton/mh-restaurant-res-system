@@ -165,9 +165,8 @@ export default function ReservationForm() {
               className="submit-button"
               >Submit</button>
             <button 
-              type='cancel' 
+              type='button' 
               className='cancel-button'
-              type='button'
               onClick={() => history.go(-1)}>
                 Cancel
               </button>
