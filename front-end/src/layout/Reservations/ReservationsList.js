@@ -1,12 +1,12 @@
 import React from 'react';
 import { useHistory } from "react-router-dom";
 
-import ErrorAlert from '../ErrorAlert';
 import Reservation from './Reservation';
 import { updateStatus } from '../../utils/api';
 import "./ReservationList.css"
+import ErrorAlert from '../ErrorAlert';
 
-export default function ReservationsList({ reservations, setReservation_id }) {
+export default function ReservationsList({ reservations }) {
   const [errors, setErrors] = React.useState(null);
   const history = useHistory();
 
@@ -32,19 +32,15 @@ export default function ReservationsList({ reservations, setReservation_id }) {
           }
         }
         cancel();
+        return () => abortController.abort();
       }
     }
 
     return (
       <div key={reservation.reservation_id} className="res-list-container">
+        <ErrorAlert error={errors} />
         <div>
-          
-          {errors ? <ErrorAlert error={errors} /> : null}
-        </div>
-        <div>
-        {!reservations 
-          ? <ErrorAlert error={"No reservations for this date"} />
-          : <Reservation reservation={reservation} handleCancel={handleCancel} /> }
+          <Reservation reservation={reservation} handleCancel={handleCancel} />
         </div>
         <div className="res-buttons">
           {reservation.status === "booked" ? (
@@ -71,7 +67,6 @@ export default function ReservationsList({ reservations, setReservation_id }) {
             Cancel
           </button>
         </div>
-        <br />
       </div>
     )
   })

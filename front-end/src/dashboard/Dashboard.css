@@ -43,3 +43,8 @@ h1 {
   background-color: #6e6e6e;
   filter: drop-shadow(2px 2px 2px #2e2e2e);
 }
+
+.text-danger-dash {
+  color: red;
+  flex-grow: 1;
+}

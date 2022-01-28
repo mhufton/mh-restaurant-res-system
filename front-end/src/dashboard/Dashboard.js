@@ -24,20 +24,19 @@ function Dashboard({ setReservation_id, date }) {
 
   const [reservations, setReservations] = useState([]);
   const [tables, setTables] = useState([]);
-  const [dashboardError, setDashboardError] = useState([]);
+  const [dashboardError, setDashboardError] = useState(null);
   
   // load the reservations by date
   useEffect(() => {
     const abortController = new AbortController();
-
     async function loadDashboard() {
       try {
-        setDashboardError([]);
+        setDashboardError(null);
         const reservationDate = await listReservations({ date }, abortController.signal);
         setReservations(reservationDate);
       } catch (error) {
-        setReservations([]);
-        setDashboardError([error.message]);
+        console.log(error)
+        setDashboardError(error);
       }
     }
     loadDashboard();
@@ -53,7 +52,6 @@ function Dashboard({ setReservation_id, date }) {
         const tableList = await listTables(abortController.signal);
         setTables(tableList);
       } catch (error) {
-        setTables([]);
         setDashboardError(error);
       }
     }
@@ -82,20 +80,17 @@ function Dashboard({ setReservation_id, date }) {
           </div>
         </div>
         <div className="res-table-container">
-          <div className="res-container">
-            <h4>Reservations</h4>
-            <div>
-              <ErrorAlert error={dashboardError} />
-            </div>
-            {reservations.length > 0 || reservations === null
-              ? <ReservationsList 
-                  reservations={reservations}
-                  setReservation_id={setReservation_id} 
-                  className="dashboard-res-container"
-                  />
-              : null
-            }
-          </div>
+          {reservations.length ?
+             <div className="res-container">
+             <h4>Reservations</h4>
+             <ErrorAlert error={dashboardError} />
+             <ReservationsList 
+               reservations={reservations}
+               setReservation_id={setReservation_id} 
+               className="dashboard-res-container"
+             />
+           </div>
+           : <p className="text-danger-dash">No reservations found</p>}
           <div className="table-container">
             <h4>Tables:</h4>
             <TableList tables={tables} />

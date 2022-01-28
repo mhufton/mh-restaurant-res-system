@@ -221,9 +221,7 @@ async function updateReservation(req, res) {
 }
 
 module.exports = {
-  list: [
-    asyncErrorBoundary(list)
-  ],
+  list: [asyncErrorBoundary(list)],
   create: [
     hasProperties(...REQUIRED_PROPERTIES), 
     onlyValidProperties(...VALID_PROPERTIES), 
