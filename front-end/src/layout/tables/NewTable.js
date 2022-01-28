@@ -22,12 +22,6 @@ export default function NewTable() {
   
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log("formData", formData)
-    // const newTable = {
-    //   ...formData,
-    //   capacity: Number(formData.capacity)
-    // }
-    // console.log("capacity type:", typeof(Number(newTable.capacity)))
     createTable(formData)
       .then(() => history.push(`/dashboard`))
       .catch((error) => setTableErrors(error))

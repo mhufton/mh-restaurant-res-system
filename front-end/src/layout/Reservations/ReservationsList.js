@@ -34,7 +34,6 @@ export default function ReservationsList({ reservations, setReservation_id }) {
         cancel();
       }
     }
-    console.log(`reservation ${reservation.reservation_id}`, reservation)
 
     return (
       <div key={reservation.reservation_id} className="res-list-container">

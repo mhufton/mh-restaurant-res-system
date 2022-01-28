@@ -32,9 +32,6 @@ export default function TableList({ tables }) {
       }
     }
 
-    console.log(`table status ${table.table_id}:`, table.status)
-    console.log("table.reservation_id", table.reservation_id)
-
     return (
       <div key={table.table_id} className="table-list-container">
         <div>
