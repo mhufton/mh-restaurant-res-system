@@ -16,7 +16,6 @@ export default function Search() {
 
   const findHandler = async (event) => {
     event.preventDefault();
-    console.log("find button clicked")
     const abortController = new AbortController();
     try {
       const response = await searchByPhone({ mobile_number })

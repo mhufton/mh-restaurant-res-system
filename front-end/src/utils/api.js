@@ -58,7 +58,6 @@
   */
  
  export async function listReservations(params, signal) {
-   console.log("list api", params)
    const url = new URL(`${API_BASE_URL}/reservations`);
    Object.entries(params).forEach(([key, value]) =>
      url.searchParams.append(key, value.toString())
@@ -136,7 +135,6 @@
  
  // finds matching reservations by mobile_number
  export async function searchByPhone(mobile_number, signal) {
-  console.log('api search', mobile_number)
   const url = `${API_BASE_URL}/reservations?mobile_number=${mobile_number.mobile_number}`;
   return await fetchJson(url, { signal })
     .then(formatReservationDate)

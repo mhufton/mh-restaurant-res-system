@@ -18,7 +18,6 @@ export default function Seat() {
   const [tables, setTables] = useState([]);
   const [errors, setErrors] = useState(null);
   const [formData, setFormData] = useState({ table_id: "" });
-  console.log('errors', errors)
   
   useEffect(() => {
     const abortController = new AbortController();

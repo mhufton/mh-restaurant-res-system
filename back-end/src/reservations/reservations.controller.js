@@ -61,7 +61,6 @@ function timeIsValid(req, res, next) {
 
 // validation middleware: checks that the value of people is a number
 function hasValidPeople(req, res, next) {
-  console.log('req.body validPeeps', req.body.people)
   const people = req.body.people;
   const valid = Number.isInteger(people);
   if (valid && people > 0) {
@@ -220,7 +219,6 @@ function statusIsNotFinished(req, res, next) {
 
 async function list(req, res) {
   const { date, viewDate, mobile_number } = req.query;
-  console.log('req.query', req.query)
   
   if (date) {
     const data = await service.listByDate(date);

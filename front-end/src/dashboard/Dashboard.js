@@ -35,7 +35,6 @@ function Dashboard({ setReservation_id, date }) {
         const reservationDate = await listReservations({ date }, abortController.signal);
         setReservations(reservationDate);
       } catch (error) {
-        console.log(error)
         setDashboardError(error);
       }
     }
