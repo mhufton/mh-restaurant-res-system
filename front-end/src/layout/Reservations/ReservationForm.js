@@ -46,7 +46,7 @@ export default function ReservationForm() {
         [target.name]: target.value,
     });
   }
- 
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!reservation_id) {
@@ -55,23 +55,26 @@ export default function ReservationForm() {
         people: Number(formData.people),
         status: "booked",
       };
+      setErrors(null)
       createReservation(reservation)
         .then((output) =>
           history.push(`/dashboard?date=${formData.reservation_date}`))
         .catch((error) => setErrors(error))
     }
 
-    if (reservation_id) {
+   
+        if (reservation_id) {
       const reservation = {
         ...formData,
         people: Number(formData.people),
       };
+      setErrors(null)
       updateReservation(reservation)
         .catch((error) => setErrors(error))
         .then(() =>
         history.push(`/dashboard?date=${formData.reservation_date}`)
         );
-    } 
+      } 
   };
 
   return (

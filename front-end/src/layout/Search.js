@@ -1,26 +1,40 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router';
 
-import { listReservations, updateStatus } from '../utils/api'; 
+import { updateStatus, searchByPhone } from '../utils/api'; 
 import Reservation from './Reservations/Reservation';
+import ErrorAlert from "./ErrorAlert"
 import "./Search.css"
 
 export default function Search() {
+  // const [currentNumber, setCurrentNumber] = useState({ mobile_number: "" });
   const [mobile_number, setMobile_number] = useState("");
   const [reservation, setReservation] = useState(null);
   const [searchError, setSearchError] = useState(null)
 
   const history = useHistory();
 
-  const findHandler = (e) => {
-    e.preventDefault();
-    listReservations({ mobile_number })
-      .then((response) => setReservation(response))
-      .catch((error) => setSearchError(["No reservation found"]))
-  }
-  console.log("res", reservation)
-  console.log("mobile", mobile_number.length)
-  console.log('err', searchError)
+  const findHandler = async (event) => {
+    event.preventDefault();
+    console.log("find button clicked")
+    const abortController = new AbortController();
+    try {
+      const response = await searchByPhone({ mobile_number })
+      if (response.length) {
+        setReservation(response);
+        setSearchError(null)
+      } else {
+        setSearchError({ message: "No reservation(s) found" })
+        setReservation(null)
+      }
+    } catch (err) {
+      if (err.name !== "AbortError") {
+        setSearchError(err);
+      }
+      console.log("Aborted");
+    }
+    return () => abortController.abort();
+  };
 
   const handleCancel = (event) => {
     event.preventDefault();
@@ -56,13 +70,14 @@ export default function Search() {
               className="form-input"
             />
             <br />
-            <button type="submit" className="search-button">Search</button>
+            <button type="submit" className="search-button">Find</button>
           </form>
         </div>
         
       </div>
+      <ErrorAlert error={searchError} />
       <div className="search-info">
-        {reservation && reservation.length > 0 && mobile_number.length ? 
+        {reservation && reservation.length > 0 ? 
           reservation.map((reservation, index) => {
             return (
               <div>

@@ -18,6 +18,7 @@ export default function Seat() {
   const [tables, setTables] = useState([]);
   const [errors, setErrors] = useState(null);
   const [formData, setFormData] = useState({ table_id: "" });
+  console.log('errors', errors)
   
   useEffect(() => {
     const abortController = new AbortController();
@@ -53,9 +54,9 @@ export default function Seat() {
   const handleChange = ({ target }) => {
     const selectedTable = tables.find(table => table.table_id === parseInt(target.value));
     if (selectedTable && selectedTable.capacity < reservation.people) {
-      setErrors(["Party size cannot exceed table capacity."]);
+      setErrors({ message: "Party size cannot exceed table capacity." });
     } else if (!selectedTable) {
-      setErrors(["Please select a table."])
+      setErrors({ message: "Please select a table." })
     } else {
       setErrors(null);
     }
