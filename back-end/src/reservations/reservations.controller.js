@@ -61,7 +61,8 @@ function timeIsValid(req, res, next) {
 
 // validation middleware: checks that the value of people is a number
 function hasValidPeople(req, res, next) {
-  const people = req.body.data.people;
+  console.log('req.body validPeeps', req.body.people)
+  const people = req.body.people;
   const valid = Number.isInteger(people);
   if (valid && people > 0) {
     return next();

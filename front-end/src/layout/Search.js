@@ -81,7 +81,7 @@ export default function Search() {
           reservation.map((reservation, index) => {
             return (
               <div>
-                <Reservation reservation={reservation} key={index} />
+                <Reservation reservation={reservation} key={reservation.resrevation_id} />
                 <a href={`/reservations/${reservation.reservation_id}/edit`} >
                   <button className="res-button-edit" >
                     Edit
