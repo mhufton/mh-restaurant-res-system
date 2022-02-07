@@ -24,7 +24,7 @@ export default function Search() {
         setReservation(response);
         setSearchError(null)
       } else {
-        setSearchError({ message: "No reservation(s) found" })
+        setSearchError({ message: "No reservations found" })
         setReservation(null)
       }
     } catch (err) {
