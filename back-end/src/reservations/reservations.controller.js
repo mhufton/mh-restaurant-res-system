@@ -61,14 +61,14 @@ function timeIsValid(req, res, next) {
 
 // validation middleware: checks that the value of people is a number
 function hasValidPeople(req, res, next) {
-  const people = req.body.people;
+  const people = req.body.data.people;
   const valid = Number.isInteger(people);
   if (valid && people > 0) {
     return next();
   }
   next({
     status: 400,
-    message: `"People in party" must be a number larger than 1`,
+    message: `people must be a number larger than 1`,
   });
 }
 
@@ -87,11 +87,24 @@ function notInPast(req, res, next) {
   });
 }
 
-function validDayAndDate(req, res, next) {
-  if (req.body.data) {
-    req.body = req.body.data;
+// validation middleware: checks that the reservation_time is during operating hours
+function duringOperatingHours(req, res, next) {
+  const reservation_time = req.body.data.reservation_time;
+  const hours = Number(reservation_time.slice(0, 2));
+  const minutes = Number(reservation_time.slice(3, 5));
+  const clockTime = hours * 100 + minutes;
+  if (clockTime < 1030 || clockTime > 2130) {
+    next({
+      status: 400,
+      message: `Reservation time '${reservation_time}' must be between 10:30 AM and 9:30 PM`,
+    });
+  } else {
+    next();
   }
-  const data = req.body;
+}
+
+function validDayAndDate(req, res, next) {
+  const data = req.body.data;
   const reservationDate = new Date(
     `${data.reservation_date} ${data.reservation_time}`
   );
@@ -124,7 +137,6 @@ function validDayAndDate(req, res, next) {
   next();
 }
 
-
 // validation middleware: checks that the reservation_date is not a Tuesday
 function notTuesday(req, res, next) {
   const { reservation_date } = req.body.data;
@@ -137,23 +149,6 @@ function notTuesday(req, res, next) {
     });
   } else {
     return next();
-  }
-}
-
-
-// validation middleware: checks that the reservation_time is during operating hours
-function duringOperatingHours(req, res, next) {
-  const reservation_time = req.body.data.reservation_time;
-  const hours = Number(reservation_time.slice(0, 2));
-  const minutes = Number(reservation_time.slice(3, 5));
-  const clockTime = hours * 100 + minutes;
-  if (clockTime < 1030 || clockTime > 2130) {
-    next({
-      status: 400,
-      message: `Reservation time '${reservation_time}' must be between 10:30 AM and 9:30 PM`,
-    });
-  } else {
-    next();
   }
 }
 
