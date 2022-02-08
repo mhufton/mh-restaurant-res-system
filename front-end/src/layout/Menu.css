@@ -8,10 +8,33 @@ span {
   flex-wrap: nowrap;
 }
 
+.nav-item {
+  list-style: none;
+  padding: 0px;
+}
+
 .link-text {
   color: #121212;
+  padding-left: 3px;
+  align-items: center;
+  justify-content: center;
 }
 
 .link-text:hover {
   color: #007bff;
+  text-decoration: none;
+}
+
+ul {
+  display: flex;
+  flex-direction: column;
+  margin: 0px 0px 0px 0px;
+  padding: 0px;
+}
+
+.menu-title {
+  display: flex;
+  justify-content: center;
+  padding-top: 10px;
+  color: black;
 }
