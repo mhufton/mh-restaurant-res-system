@@ -83,7 +83,7 @@ function Dashboard({ setReservation_id, date }) {
         </div>
         <div className="res-table-container">
           <div className="res-container">
-            <h4>Reservations</h4>
+            <h4>Reservations: {reservations ? reservations.length : null}</h4>
             <div>
               <ErrorAlert error={dashboardError} />
             </div>

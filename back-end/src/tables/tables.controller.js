@@ -3,6 +3,7 @@ const asyncErrorBoundary = require("../errors/asyncErrorBoundary");
 const hasProperties = require("../errors/hasProperties");
 const onlyValidProperties = require("../errors/onlyValidProperties");
 const reservationService = require("../reservations/reservations.service");
+const { table } = require("../db/connection");
 
 const VALID_PROPERTIES_POST = [
   "table_name",
@@ -10,12 +11,17 @@ const VALID_PROPERTIES_POST = [
 ]
 
 const VALID_PROPERTIES_PUT = [
-  "reservation_id"
+  "reservation_id",
+  "table_id",
+  "created_at", 
+  "updated_at",
+  "status"
 ]
 
 function tableNameLength(req, res, next) {
   const { table_name } = req.body.data;
   if (table_name.length > 1) {
+    console.log("table has length")
     return next();
   } else {
     return next({
@@ -28,6 +34,8 @@ function tableNameLength(req, res, next) {
 function hasValidCapacity(req, res, next) {
 const capacity = req.body.data.capacity;
 if (capacity > 0 && Number.isInteger(capacity)) {
+  console.log("table has capacity")
+
   return next();
 }
 next({
@@ -40,8 +48,10 @@ next({
 async function tableExists(req, res, next) {
   const { table_id } = req.params;
   const data = await service.read(table_id);
+  console.log('does the table exist?')
   if (data) {
     res.locals.table = data;
+    console.log("table exists... table:", res.locals.table)
     return next();
   } else {
     return next({
@@ -83,14 +93,20 @@ async function tableCapacity(req, res, next) {
 }
 
 function tableIsFree(req, res, next) {
+  console.log("is the table free?")
   const table = res.locals.table;
+  console.log("table?", table)
   if (!table.reservation_id) {
+    console.log("table is free")
     return next();
-  }
+  } else {
+    console.log("no table?")
   next({
     status: 400,
     message: `table_id '${table.table_id}' is occupied by reservation_id '${table.reservation_id}'.`,
   });
+  }
+  
 }
 
 function tableIsOccupied(req, res, next) {
@@ -127,26 +143,70 @@ async function finish(req, res) {
   res.status(200).json({ data });
 }
 
+async function read(req, res) {
+  const { table } = res.locals;
+  const data = await service.read(table.table_id)
+  res.status(200).json({ data })
+}
+
+async function updateTable(req, res) {
+  // console.log("req", req)
+  const { table } = res.locals;
+  console.log("reslocals", res.locals.table)
+  const { data } = req.params;
+  console.log("table", table)
+  console.log("data", data)
+  const updatedTableData = {
+    ...table,
+    ...data,
+  }
+  console.log("updatedTableData", updatedTableData)
+  const updatedTable = await service.updateTable(updatedTableData);
+  res.status(201).json({ data: updatedTable })
+}
+
+async function deleteTable(req, res) {
+
+}
+
 module.exports = {
     list: asyncErrorBoundary(list),
     create: [
-        hasProperties(...VALID_PROPERTIES_POST), 
-        onlyValidProperties(...VALID_PROPERTIES_POST, "reservation_id"), 
-        tableNameLength,
-        hasValidCapacity,
-        asyncErrorBoundary(create)],
+      hasProperties(...VALID_PROPERTIES_POST), 
+      onlyValidProperties(...VALID_PROPERTIES_POST, "reservation_id"), 
+      tableNameLength,
+      hasValidCapacity,
+      asyncErrorBoundary(create)],
     seat: [
-        hasProperties(...VALID_PROPERTIES_PUT), 
-        onlyValidProperties(...VALID_PROPERTIES_PUT), 
-        asyncErrorBoundary(tableExists),
-        asyncErrorBoundary(reservationExists),
-        tableCapacity,
-        tableIsFree,
-        asyncErrorBoundary(seat),
+      hasProperties(...VALID_PROPERTIES_PUT), 
+      onlyValidProperties(...VALID_PROPERTIES_PUT), 
+      asyncErrorBoundary(tableExists),
+      asyncErrorBoundary(reservationExists),
+      tableCapacity,
+      tableIsFree,
+      asyncErrorBoundary(seat),
     ],
     finish: [
-        asyncErrorBoundary(tableExists),
-        tableIsOccupied,
-        asyncErrorBoundary(finish),
+      asyncErrorBoundary(tableExists),
+      tableIsOccupied,
+      asyncErrorBoundary(finish),
+    ],
+    read: [
+      asyncErrorBoundary(tableExists),
+      read,
+    ],
+    update: [
+      hasProperties(...VALID_PROPERTIES_POST), 
+      onlyValidProperties(...VALID_PROPERTIES_PUT), 
+      asyncErrorBoundary(tableExists),
+      tableNameLength,
+      hasValidCapacity,
+      tableIsFree,
+      asyncErrorBoundary(updateTable),
+    ],
+    destroy: [
+      asyncErrorBoundary(tableExists),
+      tableIsFree,
+      asyncErrorBoundary(deleteTable),
     ]
   };

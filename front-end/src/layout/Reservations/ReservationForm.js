@@ -66,6 +66,7 @@ export default function ReservationForm() {
         ...formData,
         people: Number(formData.people),
       };
+      console.log("updating res in resForm", reservation)
       updateReservation(reservation)
         .catch((error) => setErrors(error))
         .then(() =>
@@ -165,7 +166,6 @@ export default function ReservationForm() {
               className="submit-button"
               >Submit</button>
             <button 
-              type='cancel' 
               className='cancel-button'
               type='button'
               onClick={() => history.go(-1)}>

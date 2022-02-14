@@ -42,7 +42,7 @@ export default function Search() {
           reservation.map((reservation, index) => {
             return <Reservation reservation={reservation} key={index} />
           }) 
-          : <p className="text-danger">No reservations found</p>}
+          : <ErrorAlert errors={errors} />}
       </div>
     </div>
   ) 

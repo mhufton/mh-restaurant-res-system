@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory, Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 import ErrorAlert from '../ErrorAlert';
 import Reservation from './Reservation';
@@ -60,18 +60,18 @@ export default function ReservationsList({ reservations, setReservation_id }) {
                   Edit
                 </button>
               </a>
+              <button 
+                type="cancel"
+                data-reservation-id-cancel={reservation.reservation_id}
+                onClick={handleCancel}
+                className="res-button-cancel"
+              >
+                Cancel
+              </button>
             </>
           ) : null}
-          <button 
-            type="cancel"
-            data-reservation-id-cancel={reservation.reservation_id}
-            onClick={handleCancel}
-            className="res-button-cancel"
-          >
-            Cancel
-          </button>
+          
         </div>
-        <br />
       </div>
     )
   })

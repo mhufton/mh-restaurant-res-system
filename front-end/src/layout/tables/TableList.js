@@ -38,20 +38,27 @@ export default function TableList({ tables }) {
           {errors ? <ErrorAlert error={errors} /> : null}
         </div>
         <div className="table-card">
-          <p>Table: {table.table_name} -  {table.capacity}</p>
-          <p data-table-id-status={table.table_id}>
-          Status: {table.reservation_id ? "Occupied" : "Free"} 
-          </p>
-          {table.reservation_id
-            ? <button 
-              onClick={finishHandler}
-              data-table-id-finish={table.table_id}
-              className="table-finish-button"
-              type="submit"
-              >
-                Finish
-              </button> 
-            : null}
+          <div className="table-card-info">
+            <p>Table: {table.table_name} -  {table.capacity}</p>
+            <p data-table-id-status={table.table_id}>
+            Status: {table.reservation_id ? "Occupied" : "Free"} 
+            </p>
+            
+          </div>
+          <div className="table-buttons">
+            {table.reservation_id
+              ? <button 
+                onClick={finishHandler}
+                data-table-id-finish={table.table_id}
+                className="finish-table-button"
+                type="submit"
+                >
+                  Finish
+                </button> 
+              : <a href={`/tables/${table.table_id}/edit`}>
+                  <button className="edit-table-button">Edit</button>
+                </a>}
+          </div>
         </div>
       </div>
     )

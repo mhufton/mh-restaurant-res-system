@@ -15,10 +15,10 @@ function Layout() {
   return (
     <div className="app-container">
       <div className="menu-routes-container">
-        <div className="menu-container">
+        <div className="layout-menu-container">
           <Menu />
         </div>
-        <div className="routes-container">
+        <div className="layout-routes-container">
           <Routes />
         </div>
       </div>

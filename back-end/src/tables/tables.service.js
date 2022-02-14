@@ -1,3 +1,4 @@
+const P = require("pino");
 const knex = require("../db/connection");
 
 // list all tables - sorted by table_name
@@ -21,23 +22,6 @@ function read(table_id) {
     .then((readTables) => readTables[0]);
 }
 
-// seat a reservation at a table
-// function seat(updatedTable) {
-//     return knex("tables")
-//         .select("*")
-//         .where({ table_id: updatedTable.table_id })
-//         .update(updatedTable, "*")
-//         .then((updatedTables) => updatedTables[0]);
-// }
-
-// // finish a table
-// function finish(updatedTable) {
-//     return knex("tables")
-//         .select("*")
-//         .where({ table_id: updatedTable.table_id })
-//         .update(updatedTable, "*")
-//         .then((updatedTables) => updatedTables[0]);
-// }
 async function seat(reservation_id, table_id) {
   const trx = await knex.transaction();
   let updatedTable = {};
@@ -79,10 +63,27 @@ async function finish(table_id, reservation_id) {
     .catch(trx.rollback);
 }
 
+async function updateTable(updatedTable) {
+  console.log('inside udpateTable service')
+  return knex("tables")
+    .select("*")
+    .where({ table_id: updatedTable.table_id })
+    .update(updatedTable, "*")
+    .then((result) => result[0])
+}
+
+async function destroy(table_id) {
+  return knex("tables")
+    .where(table_id)
+    .del()
+}
+
 module.exports = {
   list,
   create,
   read,
   seat,
   finish,
+  updateTable,
+  destroy,
 };

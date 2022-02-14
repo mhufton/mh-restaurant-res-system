@@ -50,6 +50,8 @@
   "license": "UNLICENSED",
   "dependencies": {
     "heroku": "^7.59.2",
-    "normalize.css": "^8.0.1"
+    "normalize.css": "^8.0.1",
+    "react-icons": "^4.3.1",
+    "styled-components": "^5.3.3"
   }
 }
