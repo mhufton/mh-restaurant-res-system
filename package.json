@@ -49,6 +49,9 @@
   "author": "Thinkful, Inc.",
   "license": "UNLICENSED",
   "dependencies": {
+    "@emotion/react": "^11.7.1",
+    "@emotion/styled": "^11.6.0",
+    "@mui/material": "^5.4.1",
     "heroku": "^7.59.2",
     "normalize.css": "^8.0.1",
     "react-icons": "^4.3.1",

@@ -8,15 +8,12 @@ export default function TableForm() {
   const history = useHistory();
   const params = useParams();
   const table_id = Number(params.table_id);
+  console.log("table_id", table_id)
 
   const [formData, setFormData] = useState({
-    first_name: "",
-    last_name: "",
-    mobile_number: "",
-    reservation_date: "",
-    reservation_time: "",
-    people: "",
-  });
+    table_name: "",
+    capacity: "",
+   });
   const [errors, setErrors] = useState(null);
 
   React.useEffect(() => {
@@ -60,7 +57,6 @@ export default function TableForm() {
   return (
     <div className="table-container">
       {table_id ? <h1>Edit Table</h1> : <h1>New Table</h1>}
-      {/* {errors.length > 0 ? <ErrorAlert errors={errors} /> : null} */}
       <ErrorAlert error={errors} />
       <form onSubmit={handleSubmit} className="new-table-form">
         <label>

@@ -14,7 +14,8 @@ function create(table) {
     .then((createdRecords) => createdRecords[0]);
 }
 
-// read a table by table_id - exists for validation purposes only
+// read a table by table_id
+// - exists for validation purposes only
 function read(table_id) {
   return knex("tables")
     .select("*")

@@ -20,6 +20,17 @@ const VALID_PROPERTIES = [
   "updated_at",
 ]
 
+let days = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+];
+
+
 // validation middleware: checks that reservation_date has a valid date value
 function dateIsValid(req, res, next) {
   const { reservation_date } = req.body.data;
@@ -57,7 +68,7 @@ function hasValidPeople(req, res, next) {
   }
   next({
     status: 400,
-    message: `people '${people}' is not a valid integer`,
+    message: `people must be a number larger than 1`,
   });
 }
 
@@ -76,23 +87,6 @@ function notInPast(req, res, next) {
   });
 }
 
-
-// validation middleware: checks that the reservation_date is not a Tuesday
-function notTuesday(req, res, next) {
-  const { reservation_date } = req.body.data;
-  const date = new Date(reservation_date);
-  const day = date.getUTCDay();
-  if (day === 2) {
-    return next({
-      status: 400,
-      message: "The restaurant is closed on Tuesday.",
-    });
-  } else {
-    return next();
-  }
-}
-
-
 // validation middleware: checks that the reservation_time is during operating hours
 function duringOperatingHours(req, res, next) {
   const reservation_time = req.body.data.reservation_time;
@@ -106,6 +100,55 @@ function duringOperatingHours(req, res, next) {
     });
   } else {
     next();
+  }
+}
+
+function validDayAndDate(req, res, next) {
+  const data = req.body.data;
+  const reservationDate = new Date(
+    `${data.reservation_date} ${data.reservation_time}`
+  );
+  let dayofWeek = days[reservationDate.getDay()];
+  let timeOfDay = data.reservation_time;
+
+  if (reservationDate < new Date() && dayofWeek === "Tuesday") {
+    return next({
+      status: 400,
+      message:
+        "Reservations can only be created for a future date and may not be on Tuesdays",
+    });
+  }
+  if (reservationDate < new Date()) {
+    return next({
+      status: 400,
+      message: "Reservations can only be created for a future date",
+    });
+  }
+  if (dayofWeek === "Tuesday") {
+    return next({ status: 400, message: "Restaurant is closed on Tuesdays" });
+  }
+  if (timeOfDay >= "21:30" || timeOfDay <= "10:30") {
+    return next({
+      status: 400,
+      message: "Reservations must be between 10:30am and 9:30pm ",
+    });
+  }
+
+  next();
+}
+
+// validation middleware: checks that the reservation_date is not a Tuesday
+function notTuesday(req, res, next) {
+  const { reservation_date } = req.body.data;
+  const date = new Date(reservation_date);
+  const day = date.getUTCDay();
+  if (day === 2) {
+    return next({
+      status: 400,
+      message: "The restaurant is closed on Tuesday.",
+    });
+  } else {
+    return next();
   }
 }
 
@@ -162,7 +205,7 @@ function statusIsNotFinished(req, res, next) {
   if (reservation.status === "finished") {
     return next({
       status: 400, 
-      message: "A finished reservation cannot be updated.",
+      message: "A finished reservation cannot be updated.", 
     });
   } else {
     return next();
@@ -171,6 +214,7 @@ function statusIsNotFinished(req, res, next) {
 
 async function list(req, res) {
   const { date, viewDate, mobile_number } = req.query;
+  
   if (date) {
     const data = await service.listByDate(date);
     res.json({ data });
@@ -221,17 +265,16 @@ async function updateReservation(req, res) {
 }
 
 module.exports = {
-  list: [
-    asyncErrorBoundary(list)
-  ],
+  list: [asyncErrorBoundary(list)],
   create: [
     hasProperties(...REQUIRED_PROPERTIES), 
     onlyValidProperties(...VALID_PROPERTIES), 
     dateIsValid,
     timeIsValid,
     hasValidPeople,
-    notTuesday,
-    notInPast,
+    // notTuesday,
+    // notInPast,
+    validDayAndDate,
     duringOperatingHours,
     statusBooked,
     asyncErrorBoundary(create),
@@ -254,9 +297,8 @@ module.exports = {
     asyncErrorBoundary(reservationExists), 
     dateIsValid,
     timeIsValid,
+    validDayAndDate,
     hasValidPeople,
-    notTuesday,
-    notInPast,
     duringOperatingHours,
     asyncErrorBoundary(updateReservation),
   ]

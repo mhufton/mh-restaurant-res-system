@@ -12,10 +12,6 @@ const VALID_PROPERTIES_POST = [
 
 const VALID_PROPERTIES_PUT = [
   "reservation_id",
-  "table_id",
-  "created_at", 
-  "updated_at",
-  "status"
 ]
 
 function tableNameLength(req, res, next) {
@@ -197,7 +193,7 @@ module.exports = {
     ],
     update: [
       hasProperties(...VALID_PROPERTIES_POST), 
-      onlyValidProperties(...VALID_PROPERTIES_PUT), 
+      onlyValidProperties(...VALID_PROPERTIES_POST), 
       asyncErrorBoundary(tableExists),
       tableNameLength,
       hasValidCapacity,
