@@ -140,8 +140,6 @@ export async function finishTable(table_id, signal) {
 }
 
 export async function updateTable(table, signal) {
-  console.log("tableData", table)
-  console.log("table_id", table.table_id, typeof(table.table_id))
   const url = `${API_BASE_URL}/tables/${table.table_id}`;
   const options = {
     method: "PUT",
@@ -160,7 +158,6 @@ export async function readByPhone(mobile_number, signal) {
 
 // updates reservation
 export async function updateReservation(reservation, signal) {
-  console.log('res', reservation)
   const url = `${API_BASE_URL}/reservations/${reservation.reservation_id}`;
   const options = {
     method: "PUT",
@@ -181,4 +178,14 @@ export async function updateStatus(reservation_id, status, signal) {
     signal,
   };
   return await fetchJson(url, options, {});
+}
+
+export async function deleteTable(table_id, signal) {
+  const url = `${API_BASE_URL}/tables/${table_id}`;
+  const options = {
+    method: "DELETE",
+    headers,
+    signal,
+  };
+  return await fetchJson(url, options, {})
 }

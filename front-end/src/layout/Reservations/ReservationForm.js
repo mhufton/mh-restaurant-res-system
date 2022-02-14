@@ -56,7 +56,7 @@ export default function ReservationForm() {
         status: "booked",
       };
       createReservation(reservation)
-        .then((output) =>
+        .then(() =>
           history.push(`/dashboard?date=${formData.reservation_date}`))
         .catch((error) => setErrors(error))
     }
@@ -66,7 +66,6 @@ export default function ReservationForm() {
         ...formData,
         people: Number(formData.people),
       };
-      console.log("updating res in resForm", reservation)
       updateReservation(reservation)
         .catch((error) => setErrors(error))
         .then(() =>

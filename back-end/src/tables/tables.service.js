@@ -65,7 +65,6 @@ async function finish(table_id, reservation_id) {
 }
 
 async function updateTable(updatedTable) {
-  console.log('inside udpateTable service')
   return knex("tables")
     .select("*")
     .where({ table_id: updatedTable.table_id })
@@ -73,9 +72,9 @@ async function updateTable(updatedTable) {
     .then((result) => result[0])
 }
 
-async function destroy(table_id) {
+async function destroy(tableId) {
   return knex("tables")
-    .where(table_id)
+    .where({ table_id: tableId })
     .del()
 }
 

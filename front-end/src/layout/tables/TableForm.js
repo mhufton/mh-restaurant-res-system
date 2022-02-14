@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
 import ErrorAlert from '../ErrorAlert';
-import { readTable, createTable, updateTable } from "../../utils/api";
+import { readTable, createTable, updateTable, deleteTable } from "../../utils/api";
+import './TableForm.css'
 
 export default function TableForm() {
   const history = useHistory();
   const params = useParams();
   const table_id = Number(params.table_id);
-  console.log("table_id", table_id)
 
   const [formData, setFormData] = useState({
     table_name: "",
@@ -21,7 +21,6 @@ export default function TableForm() {
     if (table_id) {
       async function loadTable() {
         try {
-          console.log("trying to load table")
           const loadedTable = await readTable(table_id, abortController.signal);
           setFormData(loadedTable);
         } catch (error) {
@@ -41,9 +40,29 @@ export default function TableForm() {
         .catch((error) => setErrors(error))
     }
     if (table_id) {
-      updateTable(formData)
+      const updatedTable = {
+        ...formData,
+        capacity: Number(formData.capacity)
+      }
+      updateTable(updatedTable)
         .then(() => history.push(`/dashboard`))
         .catch((error) => setErrors(error))
+    }
+  }
+
+  const handleDelete = (e) => {
+    e.preventDefault();
+    if (window.confirm("Do you want to delete this table? This cannot be undone.")) {
+      async function destroyTable() {
+        try {
+          deleteTable(table_id)
+            .then(() => history.push(`/dashboard`))
+            .catch((err) => setErrors(err))
+        } catch (err) {
+          setErrors(err);
+        }
+      }
+      destroyTable();
     }
   }
 
@@ -70,7 +89,6 @@ export default function TableForm() {
             required={true}
           />
         </label>
-        <br />
         <label>
           Capacity:
           <input 
@@ -82,17 +100,32 @@ export default function TableForm() {
             required={true}
           />
         </label>
-        <br />
-        <button 
-          type="submit"
-          className="submit-button"
-          >Submit</button>
-        <button 
-          type='cancel' 
-          className='cancel-button'
-          onClick={() => history.go(-1)}>
-            Delete
-          </button>
+        <div className="table-form-btn-container">
+          <button 
+            type="submit"
+            className="submit-button"
+            >Submit</button>
+          {table_id ?
+            <div>
+              <button 
+                type='delete' 
+                className='delete-button'
+                onClick={handleDelete}>
+                  Delete
+              </button>
+              <button
+                className='table-form-cancel-button'
+                >
+                Cancel
+              </button>
+            </div>
+            :
+            <button
+              onClick={() => history.goBack()}
+              className='table-form-cancel-button'
+            >Cancel</button>
+          }
+        </div>
       </form>
     </div>
   )
