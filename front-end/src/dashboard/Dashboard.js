@@ -92,6 +92,7 @@ function Dashboard({ setReservation_id, date }) {
                   reservations={reservations}
                   setReservation_id={setReservation_id} 
                   className="dashboard-res-container"
+                  date={date}
                   />
               : null
             }

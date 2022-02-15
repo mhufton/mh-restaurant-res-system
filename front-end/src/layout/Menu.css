@@ -44,7 +44,3 @@ ul {
   border-top-left-radius: 15px;
   border-bottom-left-radius: 15px;
 }
-
-.nav-item-active {
-  transform: scale(3);
-}

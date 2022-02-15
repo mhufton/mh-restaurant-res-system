@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 
 import "./Menu.css"
 import {
@@ -9,10 +9,18 @@ import {
   RiAddBoxLine
 } from 'react-icons/ri';
 
+import { SvgIcon } from "@mui/material";
+import { 
+  HomeIcon,
+  AddIcon,
+  SearchIcon,
+  TableRestaurant
+} from '@mui/icons-material'
+
 import newLogoSmallWhite from "../images/newLogoSmallWhite.png"
 
 /**
- * Defines the menu for this application.
+ * Defines the menu for this appHomeIconlication.
  *
  * @returns {JSX.Element}
  */
@@ -21,31 +29,31 @@ import newLogoSmallWhite from "../images/newLogoSmallWhite.png"
 
   return (
     <nav className="menu-container">
-      <NavLink to="/" className="nav-logo-NavLink" >
+      <Link to="/" className="nav-logo-NavLink" >
         <img 
           src={newLogoSmallWhite} 
           alt="Periodic Tables Logo" className="menu-logo-image" 
         />
-      </NavLink>
+      </Link>
       <ul className="nav-icons-container">
-        <li className="nav-item">
-          <NavLink exact to="/dashboard" activeClassName="nav-item-active">
-              <RiDashboard2Line className="nav-icon"/>
+        <li>
+          <NavLink exact to="/dashboard" activeClassName="nav-item">
+            <RiDashboard2Line className="nav-icon"/>
           </NavLink>
         </li>
-        <li className="nav-item">
-          <NavLink to="/search" activeClassName="nav-item-active">
-              <RiSearch2Line className="nav-icon" />
+        <li>
+          <NavLink exact to="/search" activeClassName="active">
+            <RiSearch2Line className="nav-icon" />
           </NavLink>
         </li>
-        <li className="nav-item" activeClassName="nav-item-active">
-          <NavLink to="/reservations/new" >
-              <RiAddFill className="nav-icon" />
+        <li>
+          <NavLink exact to="/reservations/new" activeClassName="active">
+            <RiAddFill className="nav-icon" />
           </NavLink>
         </li>
-        <li className="nav-item" activeClassName="nav-item-active">
-          <NavLink to="/tables/new" >
-              <RiAddBoxLine className="nav-icon" />
+        <li>
+          <NavLink exact to="/tables/new" activeClassName="active">
+            <RiAddBoxLine className="nav-icon" />
           </NavLink>
         </li>
       </ul>
