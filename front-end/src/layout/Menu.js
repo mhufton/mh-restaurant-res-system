@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useLocation } from "react-router-dom";
 
 import "./Menu.css"
 import {
@@ -8,15 +8,6 @@ import {
   RiAddFill,
   RiAddBoxLine
 } from 'react-icons/ri';
-
-import { SvgIcon } from "@mui/material";
-import { 
-  HomeIcon,
-  AddIcon,
-  SearchIcon,
-  TableRestaurant
-} from '@mui/icons-material'
-
 import newLogoSmallWhite from "../images/newLogoSmallWhite.png"
 
 /**
@@ -29,36 +20,81 @@ import newLogoSmallWhite from "../images/newLogoSmallWhite.png"
 
   return (
     <nav className="menu-container">
-      <Link to="/" className="nav-logo-NavLink" >
+      <Link to="/" className="nav-logo-MenuLink" >
         <img 
           src={newLogoSmallWhite} 
           alt="Periodic Tables Logo" className="menu-logo-image" 
         />
       </Link>
       <ul className="nav-icons-container">
-        <li>
-          <NavLink exact to="/dashboard" activeClassName="nav-item">
-            <RiDashboard2Line className="nav-icon"/>
-          </NavLink>
-        </li>
-        <li>
-          <NavLink exact to="/search" activeClassName="active">
-            <RiSearch2Line className="nav-icon" />
-          </NavLink>
-        </li>
-        <li>
-          <NavLink exact to="/reservations/new" activeClassName="active">
-            <RiAddFill className="nav-icon" />
-          </NavLink>
-        </li>
-        <li>
-          <NavLink exact to="/tables/new" activeClassName="active">
-            <RiAddBoxLine className="nav-icon" />
-          </NavLink>
-        </li>
-      </ul>
+        <MenuLink exact to="/dashboard">
+          <RiDashboard2Line className="nav-icon"/>
+        </MenuLink>
+        <MenuLink exact to="/search">
+          <RiSearch2Line className="nav-icon" />
+        </MenuLink>
+        <MenuLink exact to="/reservations/new" >
+          <RiAddFill className="nav-icon" />
+        </MenuLink>
+        <MenuLink exact to="/tables/new" >
+          <RiAddBoxLine className="nav-icon" />
+        </MenuLink>
+       </ul>
     </nav>
   );
 }
 
 export default Menu;
+
+function MenuLink(props) {
+  const location = useLocation()
+  const isActive = location.pathname === props.to;
+
+  return (
+    <li className={isActive ? "nav-item-active" : null}>
+      <NavLink {...props} />
+    </li>
+  )
+}
+
+
+// function Menu() {
+
+//   return (
+//     <nav className="menu-container">
+//       <Link to="/" className="nav-logo-MenuLink" >
+//         <img 
+//           src={newLogoSmallWhite} 
+//           alt="Periodic Tables Logo" className="menu-logo-image" 
+//         />
+//       </Link>
+//       <ul className="nav-icons-container">
+//         <MenuLink exact to="/dashboard" >
+//           <RiDashboard2Line className="nav-icon"/>
+//         </MenuLink>
+//           <MenuLink exact to="/search">
+//             <RiSearch2Line className="nav-icon" />
+//           </MenuLink>
+//           <MenuLink exact to="/reservations/new" >
+//             <RiAddFill className="nav-icon" />
+//           </MenuLink>
+//           <MenuLink exact to="/tables/new" >
+//             <RiAddBoxLine className="nav-icon" />
+//           </MenuLink>
+//       </ul>
+//     </nav>
+//   );
+// }
+
+// export default Menu;
+
+// function MenuLink(props) {
+//   const location = useLocation()
+//   const isActive = location.pathname === props.to;
+
+//   return (
+//     <li className={isActive ? "nav-item-active" : null}>
+//       <NavLink {...props} />
+//     </li>
+//   )
+// }

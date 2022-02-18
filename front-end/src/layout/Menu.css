@@ -17,10 +17,8 @@ ul {
 
 .nav-icons-container {
   margin-top: 30px;
-  color: #efefef;
   display: flex;
   flex-direction: column;
-  justify-self: center;
 }
 
 .nav-logo-link {
@@ -29,18 +27,46 @@ ul {
 
 .nav-icons-container svg path { color: #efefef }
 
+
 .nav-icon {
   transform: scale(1.75);
   align-self: center;
   min-height: 60px;
 }
 
-.nav-item {
-  align-content: center;
+.nav-icons-container li {
+  position: relative;
+  display: flex;
+  flex-direction: column;
 }
-.nav-item:hover {
-  background-color: #1a4ea1;
+
+.nav-item-active {
+  background-color: white;
   margin-left: 15px;
-  border-top-left-radius: 15px;
-  border-bottom-left-radius: 15px;
+  border-radius: 15px 0 0 15px;
+}
+.nav-item-active svg path { color: #286fe0 }
+
+li.nav-item-active a::before {
+  content: "";
+  right: 0px;
+  bottom: -30px;
+  height: 30px;
+  width: 30px;
+  position: absolute;
+  background: transparent;
+  border-radius: 50%;
+  box-shadow: 15px -15px 0 #fff;
+}
+
+li.nav-item-active a::after {
+  content: "";
+  right: 0;
+  bottom: 60px;
+  height: 30px;
+  width: 30px;
+  position: absolute;
+  background: transparent;
+  border-radius: 50%;
+  box-shadow: 15px 15px 0 #fff;
 }
