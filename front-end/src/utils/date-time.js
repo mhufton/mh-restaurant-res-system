@@ -80,3 +80,22 @@ export function next(currentDate) {
   date.setDate(date.getDate() + 1);
   return asDateString(date);
 }
+
+
+/**
+ * 
+ * @returns greeting based on current time
+ * 
+ */
+export function timeGreeting() {
+  const currentTime = new Date().getHours();
+  if (currentTime < 12) {
+    return <p>Good Morning!</p>
+  }
+  if (12 <= currentTime < 17) {
+    return <p>Good Afternoon!</p>
+  }
+  if (17 <= currentTime < 24) {
+    return <p>Good Evening!</p>
+  }
+}

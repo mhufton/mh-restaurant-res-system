@@ -21,10 +21,7 @@ import newLogoSmallWhite from "../images/newLogoSmallWhite.png"
   return (
     <nav className="menu-container">
       <Link to="/" className="nav-logo-MenuLink" >
-        <img 
-          src={newLogoSmallWhite} 
-          alt="Periodic Tables Logo" className="menu-logo-image" 
-        />
+        <p className="logo-name">PT</p>
       </Link>
       <ul className="nav-icons-container">
         <MenuLink exact to="/dashboard">
@@ -51,50 +48,8 @@ function MenuLink(props) {
   const isActive = location.pathname === props.to;
 
   return (
-    <li className={isActive ? "nav-item-active" : null}>
+    <li className={isActive ? "nav-item-active" : "nav-item"}>
       <NavLink {...props} />
     </li>
   )
 }
-
-
-// function Menu() {
-
-//   return (
-//     <nav className="menu-container">
-//       <Link to="/" className="nav-logo-MenuLink" >
-//         <img 
-//           src={newLogoSmallWhite} 
-//           alt="Periodic Tables Logo" className="menu-logo-image" 
-//         />
-//       </Link>
-//       <ul className="nav-icons-container">
-//         <MenuLink exact to="/dashboard" >
-//           <RiDashboard2Line className="nav-icon"/>
-//         </MenuLink>
-//           <MenuLink exact to="/search">
-//             <RiSearch2Line className="nav-icon" />
-//           </MenuLink>
-//           <MenuLink exact to="/reservations/new" >
-//             <RiAddFill className="nav-icon" />
-//           </MenuLink>
-//           <MenuLink exact to="/tables/new" >
-//             <RiAddBoxLine className="nav-icon" />
-//           </MenuLink>
-//       </ul>
-//     </nav>
-//   );
-// }
-
-// export default Menu;
-
-// function MenuLink(props) {
-//   const location = useLocation()
-//   const isActive = location.pathname === props.to;
-
-//   return (
-//     <li className={isActive ? "nav-item-active" : null}>
-//       <NavLink {...props} />
-//     </li>
-//   )
-// }

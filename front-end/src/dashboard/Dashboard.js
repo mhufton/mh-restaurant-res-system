@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { listReservations, listTables } from "../utils/api";
-import { today, previous, next } from "../utils/date-time"
+import { today, previous, next, timeGreeting } from "../utils/date-time"
 import useQuery from "../utils/useQuery"
 import ErrorAlert from "../layout/ErrorAlert";
 import ReservationsList from "../layout/Reservations/ReservationsList";
@@ -60,11 +60,17 @@ function Dashboard({ setReservation_id, date }) {
     loadTables();
     return () => abortController.abort();
   }, [])
+
+  // <h4>Reservations: {reservations 
+  //   ? reservations.length 
+  //   : null}
+  // </h4>
+  // <h1>{timeGreeting()}</h1>
  
   return (
     <main>
       <div className="main-container">
-        <h1>Dashboard</h1>
+        
         <div className="date-container">
           <div>
             <h4 className="mb-0">Date: {date}</h4>
@@ -83,7 +89,6 @@ function Dashboard({ setReservation_id, date }) {
         </div>
         <div className="res-table-container">
           <div className="res-container">
-            <h4>Reservations: {reservations ? reservations.length : null}</h4>
             <div>
               <ErrorAlert error={dashboardError} />
             </div>

@@ -5,11 +5,11 @@
 }
 
 .layout-menu-container {
-  max-width: 100px;
+  max-width: 125px;
   flex: 1;
 }
 
 .layout-routes-container {
   flex: 9;
-  padding: 5px;
+  padding: 20px;
 }

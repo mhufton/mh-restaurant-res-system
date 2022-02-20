@@ -2,11 +2,27 @@
   display: flex;
   flex-direction: column;
   text-align: center;
-  background-color: #286fe0;
-  border-radius: 5px;
-  margin: 10px 0px 10px 10px;
-  padding: 25px 0px 25px 0px;
-  height: 97vh;
+  background-color: #005F73;
+  height: 95.75vh;
+  border-radius: 15px;
+  padding: 25px 0 0 0;
+  margin: 20px 0 20px 20px;
+  margin-bottom: 20px;
+}
+
+.logo-name {
+  font-family: 'Open Sans', 'Sans';
+  color: #fff;
+  text-decoration: none;
+  border: 1px;
+  margin: 0 30px;
+  border-style: solid;
+  border-color: #fff;
+}:hover {
+  text-decoration: none;
+} 
+.logo-name {
+  font-size: 25px
 }
 
 ul {
@@ -16,22 +32,21 @@ ul {
 }
 
 .nav-icons-container {
-  margin-top: 30px;
+  margin-top: 50px;
   display: flex;
   flex-direction: column;
 }
 
-.nav-logo-link {
-  margin-bottom: 25px;
+.nav-item, .nav-item-active {
+  margin-top: 30px;
 }
 
 .nav-icons-container svg path { color: #efefef }
 
-
 .nav-icon {
   transform: scale(1.75);
   align-self: center;
-  min-height: 60px;
+  min-height: 50px;
 }
 
 .nav-icons-container li {
@@ -43,30 +58,30 @@ ul {
 .nav-item-active {
   background-color: white;
   margin-left: 15px;
-  border-radius: 15px 0 0 15px;
+  border-radius: 25px 0 0 25px;
 }
 .nav-item-active svg path { color: #286fe0 }
 
 li.nav-item-active a::before {
   content: "";
-  right: 0px;
-  bottom: -30px;
-  height: 30px;
-  width: 30px;
+  right: 0;
+  bottom: 50px;
+  height: 20px;
+  width: 20px;
   position: absolute;
   background: transparent;
-  border-radius: 50%;
-  box-shadow: 15px -15px 0 #fff;
+  border-radius: 15px 15px;
+  box-shadow: 10px 10px 0 #fff;
 }
 
 li.nav-item-active a::after {
   content: "";
-  right: 0;
-  bottom: 60px;
-  height: 30px;
-  width: 30px;
+  right: 0px;
+  bottom: -20px;
+  height: 20px;
+  width: 20px;
   position: absolute;
   background: transparent;
   border-radius: 50%;
-  box-shadow: 15px 15px 0 #fff;
+  box-shadow: 10px -10px 0 #fff;
 }
