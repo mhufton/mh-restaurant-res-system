@@ -1,8 +1,9 @@
+
+ ## most up to date branch is "new-design"
+
 # Periodic Tables: Restaurant Reservation System
 
 > Live deployment on Heroku: <br> [Periodic Tables]https://mh-restaurant-res-sys-frontend.herokuapp.com/dashboard
-
- ## most up to date branch is "new-design"
 
 
 ## Summary
